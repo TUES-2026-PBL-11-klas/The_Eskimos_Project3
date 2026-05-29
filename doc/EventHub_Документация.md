@@ -172,7 +172,7 @@ EventHub реализира следните основни функционал
 
 Системата следва **микросървисна архитектура, разделена по бизнес домейн** – не по технически стъпки. Това е важно разграничение: вместо да имаме сървис "Scraper", сървис "Processor", сървис "Validator" (което би било distributed monolith antipattern), имаме два сервиса с ясно различни отговорности и lifecycle-и: **Ingestion** (поглъщане на данни) и **API** (показване на данни).
 
-![Фигура 1. Архитектурна диаграма на EventHub](docs/architecture.png)
+![Фигура 1. Архитектурна диаграма на EventHub](architecture.png)
 
 *Фигура 1. Архитектурна диаграма – Ingestion service, API service, Frontend, PostgreSQL и Observability с цветово кодирани компоненти.*
 
@@ -230,7 +230,7 @@ Scrape и process винаги се случват заедно, променя�
 
 ### 2.4 Инфраструктурна диаграма
 
-[Фигура 3. Инфраструктурна диаграма – DOKS, CI/CD, observability](docs/infrastructure.png)
+[Фигура 3. Инфраструктурна диаграма – DOKS, CI/CD, observability](infrastructure.png)
 
 *Фигура 3. Инфраструктурна диаграма – GitHub Actions деплойват през Helm в DigitalOcean Managed Kubernetes; Terraform управлява клъстера, registry, DNS; Prometheus събира метрики и Alertmanager праща алерти към Discord.*
 
@@ -240,7 +240,7 @@ Scrape и process винаги се случват заедно, променя�
 
 **Домейн "Events"** – ядрото на платформата, обслужва агрегацията и публичния API.
 
-![Фигура 4. ER диаграма – основни таблици за събитията](docs/er-diagram-events.png)
+![Фигура 4. ER диаграма – основни таблици за събитията](er-diagram-events.png)
 
 *Фигура 4. ER диаграма – таблиците `sources`, `events`, `venues`, `categories`, `tags` и junction таблицата `event_tags`.*
 
@@ -254,7 +254,7 @@ Scrape и process винаги се случват заедно, променя�
 
 **Домейн "Users"** – подготвен за бъдеща функционалност с регистрация. Към момента не се използва активно (любимите се пазят в localStorage), но миграциите са създадени и таблиците са готови за разширение.
 
-![Фигура 5. ER диаграма – таблици свързани с потребители](docs/er-diagram-users.png)
+![Фигура 5. ER диаграма – таблици свързани с потребители](er-diagram-users.png)
 
 *Фигура 5. ER диаграма – таблиците `users`, `user_preferences`, `favorites`, `sessions`, `reminders`.*
 
@@ -284,7 +284,7 @@ Scrape и process винаги се случват заедно, променя�
 
 Класовата диаграма по-долу показва структурата на Ingestion service-а – най-обектно-ориентирания компонент на проекта.
 
-![Фигура 2. UML класова диаграма – Ingestion Service](docs/uml-class-diagram.png)
+![Фигура 2. UML класова диаграма – Ingestion Service](uml-class-diagram.png)
 
 *Фигура 2. UML класова диаграма – BaseScraper и конкретни scraper-и (горе); Pipeline и PipelineStep с конкретни стъпки + Repository интерфейс (долу).*
 
@@ -412,7 +412,7 @@ Frontend-ът използва Next.js 14 App Router с React Server Components 
 
 ### 4.1 Инфраструктурна диаграма
 
-![Фигура 3. Инфраструктурна диаграма – DOKS, CI/CD, observability](docs/infrastructure.png)
+![Фигура 3. Инфраструктурна диаграма – DOKS, CI/CD, observability](infrastructure.png)
 
 *Фигура 3. Инфраструктурна диаграма – GitHub Actions деплойват през Helm в DigitalOcean Managed Kubernetes; Terraform управлява клъстера, registry, DNS; Prometheus събира метрики и Alertmanager праща алерти към Discord.*
 
