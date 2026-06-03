@@ -1,0 +1,22 @@
+# Keep the build context lean and secrets/local state out of the image.
+.venv/
+.pgdata/
+.env
+.git/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.coverage
+htmlcov/
+dist/
+build/
+*.egg-info/
+
+# Note: tests/ ARE part of the context — the `test` build stage copies them. The
+# `runtime` stage simply doesn't COPY tests/, so they never reach the production image.
+
+# Local-only helpers / docs (not needed in any image).
+tasks.ps1
+Makefile

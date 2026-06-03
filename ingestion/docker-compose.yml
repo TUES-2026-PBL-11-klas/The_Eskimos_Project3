@@ -1,0 +1,82 @@
+services:
+  postgres:
+    image: postgres:16
+    environment:
+      POSTGRES_USER: eventhub
+      POSTGRES_PASSWORD: eventhub
+      POSTGRES_DB: eventhub
+    ports: ["5432:5432"]
+    volumes: ["pgdata:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U eventhub"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+  # One-shot ingestion pass: migrate then scrape→pipeline→upsert, then exit.
+  # Excluded from `up` (profiles); run with: docker compose run --rm ingestion
+  ingestion:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    env_file: .env
+    environment:
+      # Override the .env URL to reach the compose Postgres service over the compose network.
+      DATABASE_URL: postgresql+asyncpg://eventhub:eventhub@postgres:5432/eventhub
+    depends_on:
+      postgres:
+        condition: service_healthy
+    profiles: ["jobs"]
+    command: ["sh", "-c", "alembic upgrade head && python -m ingestion.main"]
+
+  # One-shot retention worker: prune events that have already passed.
+  # Run with: docker compose run --rm cleanup
+  cleanup:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    env_file: .env
+    environment:
+      DATABASE_URL: postgresql+asyncpg://eventhub:eventhub@postgres:5432/eventhub
+    depends_on:
+      postgres:
+        condition: service_healthy
+    profiles: ["jobs"]
+    command: ["python", "-m", "ingestion.cleanup"]
+
+  # Dev toolbox: pytest + ruff + mypy in the fat `test` image. src/ and tests/ are
+  # bind-mounted so edits and `ruff format` reflect on the host without a rebuild.
+  # Integration tests use testcontainers — they spin up their own throwaway postgres:16
+  # via the mounted Docker socket, so this service needs no `postgres` dependency.
+  #   docker compose run --rm test                      # full suite + coverage
+  #   docker compose run --rm test pytest -m unit        # unit only (no DB, no container)
+  #   docker compose run --rm test ruff check .          # lint
+  #   docker compose run --rm test ruff format .         # format (writes back to host)
+  #   docker compose run --rm test mypy src              # type-check
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: test
+    environment:
+      # testcontainers talks to the host Docker daemon over the mounted socket and reaches
+      # the postgres it spawns via the host gateway (Docker Desktop: host.docker.internal).
+      TESTCONTAINERS_HOST_OVERRIDE: host.docker.internal
+      # The spawned container is torn down by the `with PostgresContainer(...)` context
+      # manager, so the Ryuk reaper (flaky under docker-out-of-docker) isn't needed.
+      TESTCONTAINERS_RYUK_DISABLED: "true"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    profiles: ["dev"]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./src:/app/src
+      - ./tests:/app/tests
+      - ./migrations:/app/migrations
+      - ./alembic.ini:/app/alembic.ini
+      - ./pyproject.toml:/app/pyproject.toml
+
+volumes:
+  pgdata:
