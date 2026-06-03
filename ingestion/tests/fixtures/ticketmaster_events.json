@@ -1,0 +1,2225 @@
+{
+ "_embedded": {
+  "events": [
+   {
+    "name": "Mods Mayday",
+    "type": "event",
+    "id": "G5dFZ975dZstp",
+    "test": false,
+    "url": "https://www.ticketweb.uk/event/mods-mayday-round-chapel-tickets/11770435?REFERRAL_ID=tmfeed",
+    "locale": "en-us",
+    "images": [
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_RETINA_LANDSCAPE_16_9.jpg",
+      "width": 1136,
+      "height": 639,
+      "fallback": true
+     },
+     {
+      "ratio": "3_2",
+      "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_TABLET_LANDSCAPE_3_2.jpg",
+      "width": 1024,
+      "height": 683,
+      "fallback": true
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_TABLET_LANDSCAPE_LARGE_16_9.jpg",
+      "width": 2048,
+      "height": 1152,
+      "fallback": true
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_EVENT_DETAIL_PAGE_16_9.jpg",
+      "width": 205,
+      "height": 115,
+      "fallback": true
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_RETINA_PORTRAIT_16_9.jpg",
+      "width": 640,
+      "height": 360,
+      "fallback": true
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_TABLET_LANDSCAPE_16_9.jpg",
+      "width": 1024,
+      "height": 576,
+      "fallback": true
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_RECOMENDATION_16_9.jpg",
+      "width": 100,
+      "height": 56,
+      "fallback": true
+     },
+     {
+      "ratio": "4_3",
+      "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_CUSTOM.jpg",
+      "width": 305,
+      "height": 225,
+      "fallback": true
+     },
+     {
+      "ratio": "3_2",
+      "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_ARTIST_PAGE_3_2.jpg",
+      "width": 305,
+      "height": 203,
+      "fallback": true
+     },
+     {
+      "ratio": "3_2",
+      "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_RETINA_PORTRAIT_3_2.jpg",
+      "width": 640,
+      "height": 427,
+      "fallback": true
+     }
+    ],
+    "sales": {
+     "public": {
+      "startDateTime": "2022-02-02T14:00:00Z",
+      "startTBD": false,
+      "startTBA": false,
+      "endDateTime": "2030-05-01T23:00:00Z"
+     }
+    },
+    "dates": {
+     "start": {
+      "localDate": "2022-05-02",
+      "localTime": "15:00:00",
+      "dateTime": "2022-05-02T14:00:00Z",
+      "dateTBD": false,
+      "dateTBA": false,
+      "timeTBA": false,
+      "noSpecificTime": false
+     },
+     "timezone": "Europe/London",
+     "status": {
+      "code": "cancelled"
+     },
+     "spanMultipleDays": false
+    },
+    "classifications": [
+     {
+      "primary": true,
+      "segment": {
+       "id": "KZFzniwnSyZfZ7v7nJ",
+       "name": "Music"
+      },
+      "genre": {
+       "id": "KnvZfZ7vAeA",
+       "name": "Rock"
+      },
+      "subGenre": {
+       "id": "KZazBEonSMnZfZ7v6F1",
+       "name": "Pop"
+      },
+      "type": {
+       "id": "KZAyXgnZfZ7v7nI",
+       "name": "Undefined"
+      },
+      "subType": {
+       "id": "KZFzBErXgnZfZ7v7lJ",
+       "name": "Undefined"
+      },
+      "family": false
+     }
+    ],
+    "ageRestrictions": {
+     "legalAgeEnforced": false
+    },
+    "ticketing": {
+     "safeTix": {
+      "enabled": false
+     }
+    },
+    "nameOrigin": "custom",
+    "_links": {
+     "self": {
+      "href": "/discovery/v2/events/G5dFZ975dZstp?locale=en-us"
+     },
+     "attractions": [
+      {
+       "href": "/discovery/v2/attractions/K8vZ9174iLf?locale=en-us"
+      },
+      {
+       "href": "/discovery/v2/attractions/K8vZ9172zmV?locale=en-us"
+      },
+      {
+       "href": "/discovery/v2/attractions/K8vZ917oo9V?locale=en-us"
+      },
+      {
+       "href": "/discovery/v2/attractions/K8vZ9179FS0?locale=en-us"
+      }
+     ],
+     "venues": [
+      {
+       "href": "/discovery/v2/venues/KovZ9177px0?locale=en-de"
+      }
+     ]
+    },
+    "_embedded": {
+     "venues": [
+      {
+       "name": "Round Chapel",
+       "type": "venue",
+       "id": "KovZ9177px0",
+       "test": false,
+       "url": "https://www.ticketmaster.co.uk/round-chapel-tickets-london/venue/413474",
+       "locale": "en-de",
+       "postalCode": "E5 0LY",
+       "timezone": "Europe/London",
+       "city": {
+        "name": "London"
+       },
+       "country": {
+        "name": "Great Britain",
+        "countryCode": "GB"
+       },
+       "address": {
+        "line1": "1D Glenarm Road"
+       },
+       "location": {
+        "longitude": "-0.04993000",
+        "latitude": "51.55274900"
+       },
+       "markets": [
+        {
+         "name": "London",
+         "id": "202"
+        }
+       ],
+       "dmas": [
+        {
+         "id": 602
+        }
+       ],
+       "upcomingEvents": {
+        "ticketmaster": 1,
+        "_total": 1,
+        "_filtered": 0
+       },
+       "_links": {
+        "self": {
+         "href": "/discovery/v2/venues/KovZ9177px0?locale=en-de"
+        }
+       }
+      }
+     ],
+     "attractions": [
+      {
+       "name": "Mods Mayday",
+       "type": "attraction",
+       "id": "K8vZ9174iLf",
+       "test": false,
+       "url": "https://www.ticketmaster.com/mods-mayday-tickets/artist/2320027",
+       "locale": "en-us",
+       "images": [
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_RETINA_LANDSCAPE_16_9.jpg",
+         "width": 1136,
+         "height": 639,
+         "fallback": true
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_TABLET_LANDSCAPE_3_2.jpg",
+         "width": 1024,
+         "height": 683,
+         "fallback": true
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_TABLET_LANDSCAPE_LARGE_16_9.jpg",
+         "width": 2048,
+         "height": 1152,
+         "fallback": true
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_EVENT_DETAIL_PAGE_16_9.jpg",
+         "width": 205,
+         "height": 115,
+         "fallback": true
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_RETINA_PORTRAIT_16_9.jpg",
+         "width": 640,
+         "height": 360,
+         "fallback": true
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_TABLET_LANDSCAPE_16_9.jpg",
+         "width": 1024,
+         "height": 576,
+         "fallback": true
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_RECOMENDATION_16_9.jpg",
+         "width": 100,
+         "height": 56,
+         "fallback": true
+        },
+        {
+         "ratio": "4_3",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_CUSTOM.jpg",
+         "width": 305,
+         "height": 225,
+         "fallback": true
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_ARTIST_PAGE_3_2.jpg",
+         "width": 305,
+         "height": 203,
+         "fallback": true
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_RETINA_PORTRAIT_3_2.jpg",
+         "width": 640,
+         "height": 427,
+         "fallback": true
+        }
+       ],
+       "classifications": [
+        {
+         "primary": true,
+         "segment": {
+          "id": "KZFzniwnSyZfZ7v7nJ",
+          "name": "Music"
+         },
+         "genre": {
+          "id": "KnvZfZ7vAeA",
+          "name": "Rock"
+         },
+         "subGenre": {
+          "id": "KZazBEonSMnZfZ7v66t",
+          "name": "Mod"
+         },
+         "type": {
+          "id": "KZAyXgnZfZ7v7lt",
+          "name": "Event Style"
+         },
+         "subType": {
+          "id": "KZFzBErXgnZfZ7vA6E",
+          "name": "Festival"
+         },
+         "family": false
+        }
+       ],
+       "upcomingEvents": {
+        "ticketmaster": 1,
+        "_total": 1,
+        "_filtered": 0
+       },
+       "_links": {
+        "self": {
+         "href": "/discovery/v2/attractions/K8vZ9174iLf?locale=en-us"
+        }
+       }
+      },
+      {
+       "name": "Secret Affair",
+       "type": "attraction",
+       "id": "K8vZ9172zmV",
+       "test": false,
+       "url": "https://www.ticketmaster.com/secret-affair-tickets/artist/1740289",
+       "locale": "en-us",
+       "externalLinks": {
+        "youtube": [
+         {
+          "url": "https://www.youtube.com/channel/UC8ttdWdI15bcrMCAR3ySpLw"
+         }
+        ],
+        "twitter": [
+         {
+          "url": "https://twitter.com/SecretAffair79"
+         }
+        ],
+        "itunes": [
+         {
+          "url": "https://music.apple.com/us/artist/secret-affair/258673794"
+         }
+        ],
+        "spotify": [
+         {
+          "url": "https://open.spotify.com/artist/0QAboP7IkjMVbdk6htAvCL?autoplay=true"
+         }
+        ],
+        "facebook": [
+         {
+          "url": "https://www.facebook.com/secretaffair.official"
+         }
+        ],
+        "wiki": [
+         {
+          "url": "https://en.wikipedia.org/wiki/Secret_Affair"
+         }
+        ],
+        "instagram": [
+         {
+          "url": "https://www.instagram.com/secretaffairofficial/"
+         }
+        ],
+        "musicbrainz": [
+         {
+          "id": "d5117a22-1cf3-46c8-8b6e-5417a04e8c8a",
+          "url": "https://musicbrainz.org/artist/d5117a22-1cf3-46c8-8b6e-5417a04e8c8a"
+         }
+        ],
+        "homepage": [
+         {
+          "url": "http://www.secretaffair.info/"
+         }
+        ]
+       },
+       "images": [
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_RETINA_LANDSCAPE_16_9.jpg",
+         "width": 1136,
+         "height": 639,
+         "fallback": true
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_TABLET_LANDSCAPE_3_2.jpg",
+         "width": 1024,
+         "height": 683,
+         "fallback": true
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_TABLET_LANDSCAPE_LARGE_16_9.jpg",
+         "width": 2048,
+         "height": 1152,
+         "fallback": true
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_EVENT_DETAIL_PAGE_16_9.jpg",
+         "width": 205,
+         "height": 115,
+         "fallback": true
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_RETINA_PORTRAIT_16_9.jpg",
+         "width": 640,
+         "height": 360,
+         "fallback": true
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_TABLET_LANDSCAPE_16_9.jpg",
+         "width": 1024,
+         "height": 576,
+         "fallback": true
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_RECOMENDATION_16_9.jpg",
+         "width": 100,
+         "height": 56,
+         "fallback": true
+        },
+        {
+         "ratio": "4_3",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_CUSTOM.jpg",
+         "width": 305,
+         "height": 225,
+         "fallback": true
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_ARTIST_PAGE_3_2.jpg",
+         "width": 305,
+         "height": 203,
+         "fallback": true
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_RETINA_PORTRAIT_3_2.jpg",
+         "width": 640,
+         "height": 427,
+         "fallback": true
+        }
+       ],
+       "classifications": [
+        {
+         "primary": true,
+         "segment": {
+          "id": "KZFzniwnSyZfZ7v7nJ",
+          "name": "Music"
+         },
+         "genre": {
+          "id": "KnvZfZ7vAeA",
+          "name": "Rock"
+         },
+         "subGenre": {
+          "id": "KZazBEonSMnZfZ7v6F1",
+          "name": "Pop"
+         },
+         "type": {
+          "id": "KZAyXgnZfZ7v7nI",
+          "name": "Undefined"
+         },
+         "subType": {
+          "id": "KZFzBErXgnZfZ7v7lJ",
+          "name": "Undefined"
+         },
+         "family": false
+        }
+       ],
+       "upcomingEvents": {
+        "universe": 1,
+        "ticketmaster": 1,
+        "_total": 2,
+        "_filtered": 0
+       },
+       "_links": {
+        "self": {
+         "href": "/discovery/v2/attractions/K8vZ9172zmV?locale=en-us"
+        }
+       }
+      },
+      {
+       "name": "Squire",
+       "type": "attraction",
+       "id": "K8vZ917oo9V",
+       "test": false,
+       "url": "https://www.ticketmaster.com/squire-tickets/artist/1872423",
+       "locale": "en-us",
+       "images": [
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_RETINA_LANDSCAPE_16_9.jpg",
+         "width": 1136,
+         "height": 639,
+         "fallback": true
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_TABLET_LANDSCAPE_3_2.jpg",
+         "width": 1024,
+         "height": 683,
+         "fallback": true
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_TABLET_LANDSCAPE_LARGE_16_9.jpg",
+         "width": 2048,
+         "height": 1152,
+         "fallback": true
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_EVENT_DETAIL_PAGE_16_9.jpg",
+         "width": 205,
+         "height": 115,
+         "fallback": true
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_RETINA_PORTRAIT_16_9.jpg",
+         "width": 640,
+         "height": 360,
+         "fallback": true
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_TABLET_LANDSCAPE_16_9.jpg",
+         "width": 1024,
+         "height": 576,
+         "fallback": true
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_RECOMENDATION_16_9.jpg",
+         "width": 100,
+         "height": 56,
+         "fallback": true
+        },
+        {
+         "ratio": "4_3",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_CUSTOM.jpg",
+         "width": 305,
+         "height": 225,
+         "fallback": true
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_ARTIST_PAGE_3_2.jpg",
+         "width": 305,
+         "height": 203,
+         "fallback": true
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/c/fbc/b293c0ad-c904-4215-bc59-8d7f2414dfbc_106141_RETINA_PORTRAIT_3_2.jpg",
+         "width": 640,
+         "height": 427,
+         "fallback": true
+        }
+       ],
+       "classifications": [
+        {
+         "primary": true,
+         "segment": {
+          "id": "KZFzniwnSyZfZ7v7nJ",
+          "name": "Music"
+         },
+         "genre": {
+          "id": "KnvZfZ7vAeA",
+          "name": "Rock"
+         },
+         "subGenre": {
+          "id": "KZazBEonSMnZfZ7v6dt",
+          "name": "Alternative Rock"
+         },
+         "type": {
+          "id": "KZAyXgnZfZ7v7nI",
+          "name": "Undefined"
+         },
+         "subType": {
+          "id": "KZFzBErXgnZfZ7v7lJ",
+          "name": "Undefined"
+         },
+         "family": false
+        }
+       ],
+       "upcomingEvents": {
+        "ticketmaster": 1,
+        "_total": 1,
+        "_filtered": 0
+       },
+       "_links": {
+        "self": {
+         "href": "/discovery/v2/attractions/K8vZ917oo9V?locale=en-us"
+        }
+       }
+      },
+      {
+       "name": "The Vapors",
+       "type": "attraction",
+       "id": "K8vZ9179FS0",
+       "test": false,
+       "url": "https://www.ticketmaster.com/the-vapors-tickets/artist/2509077",
+       "locale": "en-us",
+       "externalLinks": {
+        "youtube": [
+         {
+          "url": "https://www.youtube.com/channel/UCBsSXSRBgUaK_-rhYmeLFHA"
+         }
+        ],
+        "twitter": [
+         {
+          "url": "https://mobile.twitter.com/vaporsofficial"
+         }
+        ],
+        "itunes": [
+         {
+          "url": "https://music.apple.com/us/artist/the-vapors/18622460"
+         }
+        ],
+        "facebook": [
+         {
+          "url": "https://www.facebook.com/TheVaporsOfficial"
+         }
+        ],
+        "spotify": [
+         {
+          "url": "https://open.spotify.com/artist/4K3NWDwBIxgktui14SccR2"
+         }
+        ],
+        "musicbrainz": [
+         {
+          "id": "e389160d-6d98-4657-9a75-9229b41621bc",
+          "url": "https://musicbrainz.org/artist/e389160d-6d98-4657-9a75-9229b41621bc"
+         }
+        ],
+        "instagram": [
+         {
+          "url": "https://www.instagram.com/thevaporsofficial/"
+         }
+        ],
+        "homepage": [
+         {
+          "url": "http://www.thevapors.co.uk"
+         }
+        ]
+       },
+       "images": [
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/942/7782e4c8-2feb-4678-92da-124aafb70942_RETINA_PORTRAIT_16_9.jpg",
+         "width": 640,
+         "height": 360,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/942/7782e4c8-2feb-4678-92da-124aafb70942_RECOMENDATION_16_9.jpg",
+         "width": 100,
+         "height": 56,
+         "fallback": false
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/a/942/7782e4c8-2feb-4678-92da-124aafb70942_ARTIST_PAGE_3_2.jpg",
+         "width": 305,
+         "height": 203,
+         "fallback": false
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/a/942/7782e4c8-2feb-4678-92da-124aafb70942_TABLET_LANDSCAPE_3_2.jpg",
+         "width": 1024,
+         "height": 683,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/942/7782e4c8-2feb-4678-92da-124aafb70942_TABLET_LANDSCAPE_LARGE_16_9.jpg",
+         "width": 2048,
+         "height": 1152,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/942/7782e4c8-2feb-4678-92da-124aafb70942_TABLET_LANDSCAPE_16_9.jpg",
+         "width": 1024,
+         "height": 576,
+         "fallback": false
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/a/942/7782e4c8-2feb-4678-92da-124aafb70942_RETINA_PORTRAIT_3_2.jpg",
+         "width": 640,
+         "height": 427,
+         "fallback": false
+        },
+        {
+         "url": "https://s1.ticketm.net/dam/a/942/7782e4c8-2feb-4678-92da-124aafb70942_SOURCE",
+         "width": 2426,
+         "height": 1900,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/uk/dbimages/61389a.jpg",
+         "width": 205,
+         "height": 115,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/942/7782e4c8-2feb-4678-92da-124aafb70942_RETINA_LANDSCAPE_16_9.jpg",
+         "width": 1136,
+         "height": 639,
+         "fallback": false
+        },
+        {
+         "ratio": "4_3",
+         "url": "https://s1.ticketm.net/uk/dbimages/61388a.jpg",
+         "width": 305,
+         "height": 225,
+         "fallback": false
+        }
+       ],
+       "classifications": [
+        {
+         "primary": true,
+         "segment": {
+          "id": "KZFzniwnSyZfZ7v7nJ",
+          "name": "Music"
+         },
+         "genre": {
+          "id": "KnvZfZ7vAev",
+          "name": "Pop"
+         },
+         "subGenre": {
+          "id": "KZazBEonSMnZfZ7vkEI",
+          "name": "New Wave"
+         },
+         "type": {
+          "id": "KZAyXgnZfZ7v7l1",
+          "name": "Group"
+         },
+         "subType": {
+          "id": "KZFzBErXgnZfZ7vA71",
+          "name": "Band"
+         },
+         "family": false
+        }
+       ],
+       "upcomingEvents": {
+        "ticketmaster": 4,
+        "ticketweb": 1,
+        "_total": 5,
+        "_filtered": 0
+       },
+       "_links": {
+        "self": {
+         "href": "/discovery/v2/attractions/K8vZ9179FS0?locale=en-us"
+        }
+       }
+      }
+     ]
+    }
+   },
+   {
+    "name": "Row C Start",
+    "type": "event",
+    "id": "ZxqgVMyxjZBYPJzwisVEJswJSIcnzynMZ6k1",
+    "test": false,
+    "url": "https://www.eticketing.co.uk/asmglobalmanchester",
+    "locale": "en-us",
+    "images": [
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/c/8cf/a6653880-7899-4f67-8067-1f95f4d158cf_124761_EVENT_DETAIL_PAGE_16_9.jpg",
+      "width": 205,
+      "height": 115,
+      "fallback": true
+     },
+     {
+      "ratio": "3_2",
+      "url": "https://s1.ticketm.net/dam/c/8cf/a6653880-7899-4f67-8067-1f95f4d158cf_124761_TABLET_LANDSCAPE_3_2.jpg",
+      "width": 1024,
+      "height": 683,
+      "fallback": true
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/c/8cf/a6653880-7899-4f67-8067-1f95f4d158cf_124761_TABLET_LANDSCAPE_LARGE_16_9.jpg",
+      "width": 2048,
+      "height": 1152,
+      "fallback": true
+     },
+     {
+      "ratio": "4_3",
+      "url": "https://s1.ticketm.net/dam/c/8cf/a6653880-7899-4f67-8067-1f95f4d158cf_124761_CUSTOM.jpg",
+      "width": 305,
+      "height": 225,
+      "fallback": true
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/c/8cf/a6653880-7899-4f67-8067-1f95f4d158cf_124761_RETINA_LANDSCAPE_16_9.jpg",
+      "width": 1136,
+      "height": 639,
+      "fallback": true
+     },
+     {
+      "ratio": "3_2",
+      "url": "https://s1.ticketm.net/dam/c/8cf/a6653880-7899-4f67-8067-1f95f4d158cf_124761_ARTIST_PAGE_3_2.jpg",
+      "width": 305,
+      "height": 203,
+      "fallback": true
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/c/8cf/a6653880-7899-4f67-8067-1f95f4d158cf_124761_RETINA_PORTRAIT_16_9.jpg",
+      "width": 640,
+      "height": 360,
+      "fallback": true
+     },
+     {
+      "ratio": "3_2",
+      "url": "https://s1.ticketm.net/dam/c/8cf/a6653880-7899-4f67-8067-1f95f4d158cf_124761_RETINA_PORTRAIT_3_2.jpg",
+      "width": 640,
+      "height": 427,
+      "fallback": true
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/c/8cf/a6653880-7899-4f67-8067-1f95f4d158cf_124761_TABLET_LANDSCAPE_16_9.jpg",
+      "width": 1024,
+      "height": 576,
+      "fallback": true
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/c/8cf/a6653880-7899-4f67-8067-1f95f4d158cf_124761_RECOMENDATION_16_9.jpg",
+      "width": 100,
+      "height": 56,
+      "fallback": true
+     }
+    ],
+    "sales": {
+     "public": {
+      "startDateTime": "2023-11-24T00:00:00Z",
+      "startTBD": false,
+      "startTBA": false,
+      "endDateTime": "2027-11-24T00:00:00Z"
+     }
+    },
+    "dates": {
+     "start": {
+      "localDate": "2024-05-25",
+      "localTime": "19:30:00",
+      "dateTime": "2024-05-25T18:30:00Z",
+      "dateTBD": false,
+      "dateTBA": false,
+      "timeTBA": false,
+      "noSpecificTime": false
+     },
+     "end": {
+      "localDate": "2027-11-24",
+      "localTime": "00:00:00",
+      "dateTime": "2027-11-24T00:00:00Z",
+      "approximate": false,
+      "noSpecificTime": false
+     },
+     "timezone": "Europe/London",
+     "status": {
+      "code": "onsale"
+     },
+     "spanMultipleDays": false
+    },
+    "ticketing": {
+     "safeTix": {
+      "enabled": false
+     }
+    },
+    "_links": {
+     "self": {
+      "href": "/discovery/v2/events/ZxqgVMyxjZBYPJzwisVEJswJSIcnzynMZ6k1?locale=en-us"
+     },
+     "venues": [
+      {
+       "href": "/discovery/v2/venues/KovZ9177A4f?locale=en-us"
+      }
+     ]
+    },
+    "_embedded": {
+     "venues": [
+      {
+       "name": "AO Arena",
+       "type": "venue",
+       "id": "KovZ9177A4f",
+       "test": false,
+       "url": "https://www.ticketmaster.co.uk/ao-arena-tickets-manchester/venue/254336",
+       "locale": "en-us",
+       "images": [
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/uk/dbimages/2577v.jpg",
+         "width": 205,
+         "height": 115,
+         "fallback": false
+        }
+       ],
+       "postalCode": "M3 1AR",
+       "timezone": "Europe/London",
+       "city": {
+        "name": "Manchester"
+       },
+       "country": {
+        "name": "Great Britain",
+        "countryCode": "GB"
+       },
+       "address": {
+        "line1": "Victoria Station, Hunts Bank"
+       },
+       "location": {
+        "longitude": "-2.24406600",
+        "latitude": "53.48816400"
+       },
+       "markets": [
+        {
+         "name": "All of United Kingdom",
+         "id": "201"
+        },
+        {
+         "name": "Wales and North West",
+         "id": "205"
+        },
+        {
+         "name": "North and North East",
+         "id": "206"
+        }
+       ],
+       "dmas": [
+        {
+         "id": 601
+        },
+        {
+         "id": 605
+        },
+        {
+         "id": 606
+        }
+       ],
+       "boxOfficeInfo": {
+        "phoneNumberDetail": "0844 847 8000",
+        "openHoursDetail": "The box office is situated on the Trinity Way link corridor next to the Arena Car Park entrance. This box office will be available from 4pm only on a show day and will close 15 minutes after the main act has gone onstage. Opening times will change for Box Office depending on the time of the show. Please check https://ao-arena.com/your-visit/ prior to attending the event to ensure you have the most current up to date information.",
+        "acceptedPaymentDetail": "Ticket purchases can be made at this box office during opening hours. Payment by all major debit/credit cards is available.",
+        "willCallDetail": "Pre-booked tickets can be collected on the day of the show from 4pm, up to 15 minutes after the main act goes on stage. Customers must take the credit card used to make the booking and the Ticketmaster reference number with them in order to collect the tickets. The cardholder will need to sign for the tickets. If you have any queries regarding box office collections, please contact Ticketmaster's customer services department."
+       },
+       "parkingDetail": "The official on-site multi-story car park has a capacity of 1,000. In addition, approximately 7,000 recognised parking spaces within 10 minutes walk serve the AO Arena.",
+       "accessibleSeatingDetail": "AO Arena has been awarded GOLD status by Attitude is Everything, the disability-led charity with over 20 years' experience improving Accessible people's access to live music. Provisions have been made to cater for wheelchair users. Lifts have been installed and it is possible to enter the arena by the access link between Trinity Way and Victoria Station. The Hunts Bank entrance is accessible via external lift and access from the car park and Victoria Station is possible via the City Room. The second raised tier of seating (BLK 201 and above) requires the negotiation of steep steps and so may not be suitable for the elderly, infirm or those with mobility problems. Seating at the front of the upper tier is 35ft (10m) from ground, rising to 70ft (20m) at the rear. Please call 0161 950 5229 for further details.",
+       "generalInfo": {
+        "generalRule": "What items are NOT allowed into the arena? Backpacks, holdalls, luggage, oversized bags and cushions. (Bags larger than 35cm x 40cm x 19cm will not be permitted) No video cameras, still cameras or recording devices. No food or drink allowed. The AO Arena is a non-smoking venue, this includes e-cigarettes and vapes). In addition to these, a full list of items that are also not permitted into the arena can be reviewed here https://www.manchester-arena.com/your-visit/ along with anything else which we deem to ruin the enjoyment or viewing experience of others.",
+        "childRule": "Children under the age of two are admitted free, except for children's shows where the age limit may be 12 months. If unsure check event details when booking an individual show with Ticketmaster. Children without a ticket will not be allocated a seat and must sit on the parents lap. Seated Tickets: Under 14s must be accompanied by an adult. Standing Tickets: Strictly over 14s only in the standing area, admission to the standing area will be refused to customers below this age."
+       },
+       "upcomingEvents": {
+        "sportxr-uk_asmglobalmanchester": 1,
+        "ticketmaster": 82,
+        "_total": 83,
+        "_filtered": 0
+       },
+       "ada": {
+        "adaPhones": "If your access requirements are not met by the online booking system, please call 0161 987 5297\n\n",
+        "adaCustomCopy": "Accessible Information - AO Arena\nAO Arena has been designed to be accessible to everyone for more information you can visit: https://www.ao-arena.com/plan-your-visit/accessibility \nAll our accessible tickets are available to be purchased online via: www.aoarena.com \nWhen you are on your events page, select Wheelchair Tickets or Ambulant Accessible Tickets, where you will be able to select your seat alongside a free personal companion ticket. \n\n",
+        "adaHours": "The phone line is open Monday to Friday 9:00 to 17:30. \nThe ticket office will open no later than 1 hour before doors and will not be open for new shows going on sale.\n"
+       },
+       "_links": {
+        "self": {
+         "href": "/discovery/v2/venues/KovZ9177A4f?locale=en-us"
+        }
+       }
+      }
+     ]
+    }
+   },
+   {
+    "name": "Craig Ferguson: Pants on Fire",
+    "type": "event",
+    "id": "G5dzZbxMv7o3E",
+    "test": false,
+    "url": "https://www.ticketmaster.co.uk/craig-ferguson-pants-on-fire-glasgow-26-04-2026/event/3E00622DC11114A7",
+    "locale": "en-us",
+    "images": [
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/bf8/d40a53c6-f296-4c63-8385-1830aac69bf8_TABLET_LANDSCAPE_16_9.jpg",
+      "width": 1024,
+      "height": 576,
+      "fallback": false
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/bf8/d40a53c6-f296-4c63-8385-1830aac69bf8_RETINA_LANDSCAPE_16_9.jpg",
+      "width": 1136,
+      "height": 639,
+      "fallback": false
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/bf8/d40a53c6-f296-4c63-8385-1830aac69bf8_SOURCE",
+      "width": 1920,
+      "height": 1080,
+      "fallback": false
+     },
+     {
+      "ratio": "3_2",
+      "url": "https://s1.ticketm.net/dam/a/bf8/d40a53c6-f296-4c63-8385-1830aac69bf8_TABLET_LANDSCAPE_3_2.jpg",
+      "width": 1024,
+      "height": 683,
+      "fallback": false
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/6cf/4103d083-9c79-4b3b-8df0-2c23029a56cf_TABLET_LANDSCAPE_LARGE_16_9.jpg",
+      "width": 2048,
+      "height": 1152,
+      "fallback": false
+     },
+     {
+      "ratio": "4_3",
+      "url": "https://s1.ticketm.net/dam/a/bf8/d40a53c6-f296-4c63-8385-1830aac69bf8_CUSTOM.jpg",
+      "width": 305,
+      "height": 225,
+      "fallback": false
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/bf8/d40a53c6-f296-4c63-8385-1830aac69bf8_EVENT_DETAIL_PAGE_16_9.jpg",
+      "width": 205,
+      "height": 115,
+      "fallback": false
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/bf8/d40a53c6-f296-4c63-8385-1830aac69bf8_RECOMENDATION_16_9.jpg",
+      "width": 100,
+      "height": 56,
+      "fallback": false
+     },
+     {
+      "ratio": "3_2",
+      "url": "https://s1.ticketm.net/dam/a/bf8/d40a53c6-f296-4c63-8385-1830aac69bf8_ARTIST_PAGE_3_2.jpg",
+      "width": 305,
+      "height": 203,
+      "fallback": false
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/bf8/d40a53c6-f296-4c63-8385-1830aac69bf8_RETINA_PORTRAIT_16_9.jpg",
+      "width": 640,
+      "height": 360,
+      "fallback": false
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/6cf/4103d083-9c79-4b3b-8df0-2c23029a56cf_SOURCE",
+      "width": 2426,
+      "height": 1365,
+      "fallback": false
+     },
+     {
+      "ratio": "3_2",
+      "url": "https://s1.ticketm.net/dam/a/bf8/d40a53c6-f296-4c63-8385-1830aac69bf8_RETINA_PORTRAIT_3_2.jpg",
+      "width": 640,
+      "height": 427,
+      "fallback": false
+     }
+    ],
+    "sales": {
+     "public": {
+      "startDateTime": "2025-01-17T09:00:00Z",
+      "startTBD": false,
+      "startTBA": false,
+      "endDateTime": "2026-08-21T20:00:00Z"
+     },
+     "presales": [
+      {
+       "startDateTime": "2025-01-15T09:00:00Z",
+       "endDateTime": "2025-01-17T08:00:00Z",
+       "name": "Priority from O2"
+      },
+      {
+       "startDateTime": "2025-01-15T09:00:00Z",
+       "endDateTime": "2025-01-17T08:00:00Z",
+       "name": "Artist Presale"
+      }
+     ]
+    },
+    "dates": {
+     "start": {
+      "localDate": "2026-04-26",
+      "localTime": "19:00:00",
+      "dateTime": "2026-04-26T18:00:00Z",
+      "dateTBD": false,
+      "dateTBA": false,
+      "timeTBA": false,
+      "noSpecificTime": false
+     },
+     "timezone": "Europe/London",
+     "status": {
+      "code": "rescheduled"
+     },
+     "spanMultipleDays": false
+    },
+    "classifications": [
+     {
+      "primary": true,
+      "segment": {
+       "id": "KZFzniwnSyZfZ7v7na",
+       "name": "Arts & Theatre"
+      },
+      "genre": {
+       "id": "KnvZfZ7vAe1",
+       "name": "Comedy"
+      },
+      "subGenre": {
+       "id": "KZazBEonSMnZfZ7vF17",
+       "name": "Comedy"
+      },
+      "type": {
+       "id": "KZAyXgnZfZ7v7nI",
+       "name": "Undefined"
+      },
+      "subType": {
+       "id": "KZFzBErXgnZfZ7v7lJ",
+       "name": "Undefined"
+      },
+      "family": false
+     }
+    ],
+    "promoter": {
+     "id": "4444",
+     "name": "ACADEMY MUSIC GROUP (O2 ACADEMY GLASGOW)",
+     "description": "ACADEMY MUSIC GROUP (O2 ACADEMY GLASGOW) / NTL / GBR"
+    },
+    "promoters": [
+     {
+      "id": "4444",
+      "name": "ACADEMY MUSIC GROUP (O2 ACADEMY GLASGOW)",
+      "description": "ACADEMY MUSIC GROUP (O2 ACADEMY GLASGOW) / NTL / GBR"
+     },
+     {
+      "id": "3092",
+      "name": "OFF THE KERB PRODUCTIONS",
+      "description": "OFF THE KERB PRODUCTIONS / NTL / GBR"
+     }
+    ],
+    "info": "Please note: re-sale is not permitted for this event, reselling of tickets will result in cancellation of booking. Security - Bag Policy: Large bags including rucksacks are not allowed. There are no facilities to leave large bags or luggage. If you really have to bring a bag - and it's preferable you don't, please make sure it's small. Only one small bag per person is permitted and it must not be bigger than A4 size. Height: 28.7cm Width: 21cm Depth 15cm",
+    "pleaseNote": "Over 16s only. Under 25s require ID (passport/ driving licence) to purchase alcohol. A max of 8 tickets per person and per household applies. Tickets in excess of 8 will be cancelled.",
+    "seatmap": {
+     "staticUrl": "https://s1.ticketm.net/uk/tmimages/venue/maps/uk5/16685s.gif"
+    },
+    "ticketLimit": {
+     "info": "Please note: There is a ticket limit of 8 tickets per person and per credit card on this event"
+    },
+    "ageRestrictions": {
+     "legalAgeEnforced": false
+    },
+    "ticketing": {
+     "safeTix": {
+      "enabled": true
+     },
+     "allInclusivePricing": {
+      "enabled": false
+     }
+    },
+    "nameOrigin": "custom",
+    "_links": {
+     "self": {
+      "href": "/discovery/v2/events/G5dzZbxMv7o3E?locale=en-us"
+     },
+     "attractions": [
+      {
+       "href": "/discovery/v2/attractions/K8vZ9175WY7?locale=en-us"
+      }
+     ],
+     "venues": [
+      {
+       "href": "/discovery/v2/venues/KovZ9177aJf?locale=en-us"
+      }
+     ]
+    },
+    "_embedded": {
+     "venues": [
+      {
+       "name": "O2 Academy Glasgow",
+       "type": "venue",
+       "id": "KovZ9177aJf",
+       "test": false,
+       "url": "https://www.ticketmaster.co.uk/o2-academy-glasgow-tickets-glasgow/venue/509730",
+       "locale": "en-us",
+       "images": [
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/uk/dbimages/2460v.jpg",
+         "width": 205,
+         "height": 115,
+         "fallback": false
+        }
+       ],
+       "postalCode": "G5 9NT",
+       "timezone": "Europe/London",
+       "city": {
+        "name": "Glasgow"
+       },
+       "country": {
+        "name": "Great Britain",
+        "countryCode": "GB"
+       },
+       "address": {
+        "line1": "121 Eglington Street"
+       },
+       "location": {
+        "longitude": "-4.25878090",
+        "latitude": "55.85044960"
+       },
+       "markets": [
+        {
+         "name": "All of United Kingdom",
+         "id": "201"
+        },
+        {
+         "name": "Scotland",
+         "id": "207"
+        }
+       ],
+       "dmas": [
+        {
+         "id": 601
+        },
+        {
+         "id": 607
+        }
+       ],
+       "boxOfficeInfo": {
+        "phoneNumberDetail": "+44 (0)141 418 3000, from 12 noon to 4pm, Monday, Wednesday and Friday",
+        "openHoursDetail": "From 7pm on show days only.",
+        "willCallDetail": "From 7pm on show days only."
+       },
+       "parkingDetail": "We do not have our own parking facilities, but there are options with parking vouchers as well as being free in some streets after 6pm or 8pm. There is also a 159 space car park at Bridge Street subway station, around 300 metres away on Eglinton Street. We have a drop off point at the entrance of our venue.",
+       "accessibleSeatingDetail": "O2 Academy Glasgow has a viewing area in the auditorium accessible via a ramp for wheelchair users or anyone who requires assistance. We can accommodate five wheelchairs and stools. Bench seating is available either side of the viewing area, please do contact us in advance of coming to a show should you require a reservation.",
+       "generalInfo": {
+        "generalRule": "No cameras, video cameras or audio recording. No food, bottles, cans or alcohol to be brought onto the premises. No smoking. Security measures are in place so there will be bag checks on arrival. Only one small bag per person is permitted, and it must not be bigger than A4 size. Height: 29.7cm Width: 21cm Depth: 15cm Large bags, including rucksacks, are not allowed and there are no facilities to leave any luggage so please make alternative arrangements. If you really have to bring a bag and its preferable you don't, please make sure its small.",
+        "childRule": "It's always best to check the age restrictions for each event in advance as they vary from show to show."
+       },
+       "upcomingEvents": {
+        "ticketmaster": 74,
+        "_total": 74,
+        "_filtered": 0
+       },
+       "ada": {
+        "adaPhones": "mail@o2academyglasgow.co.uk",
+        "adaCustomCopy": "Accessible tickets are available to purchase via Ticketmaster.\nShould you have any accessibility questions, or if you need any assistance, please get in touch with the venue Access team via mail@o2academyglasgow.co.uk\n",
+        "adaHours": "Monday-Saturday 12:00pm-4:00pm"
+       },
+       "_links": {
+        "self": {
+         "href": "/discovery/v2/venues/KovZ9177aJf?locale=en-us"
+        }
+       }
+      }
+     ],
+     "attractions": [
+      {
+       "name": "Craig Ferguson",
+       "type": "attraction",
+       "id": "K8vZ9175WY7",
+       "test": false,
+       "url": "https://www.ticketmaster.com/craig-ferguson-tickets/artist/1025525",
+       "locale": "en-us",
+       "images": [
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/bf8/d40a53c6-f296-4c63-8385-1830aac69bf8_TABLET_LANDSCAPE_16_9.jpg",
+         "width": 1024,
+         "height": 576,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/bf8/d40a53c6-f296-4c63-8385-1830aac69bf8_RETINA_LANDSCAPE_16_9.jpg",
+         "width": 1136,
+         "height": 639,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/bf8/d40a53c6-f296-4c63-8385-1830aac69bf8_SOURCE",
+         "width": 1920,
+         "height": 1080,
+         "fallback": false
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/a/bf8/d40a53c6-f296-4c63-8385-1830aac69bf8_TABLET_LANDSCAPE_3_2.jpg",
+         "width": 1024,
+         "height": 683,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/6cf/4103d083-9c79-4b3b-8df0-2c23029a56cf_TABLET_LANDSCAPE_LARGE_16_9.jpg",
+         "width": 2048,
+         "height": 1152,
+         "fallback": false
+        },
+        {
+         "ratio": "4_3",
+         "url": "https://s1.ticketm.net/dam/a/bf8/d40a53c6-f296-4c63-8385-1830aac69bf8_CUSTOM.jpg",
+         "width": 305,
+         "height": 225,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/bf8/d40a53c6-f296-4c63-8385-1830aac69bf8_EVENT_DETAIL_PAGE_16_9.jpg",
+         "width": 205,
+         "height": 115,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/bf8/d40a53c6-f296-4c63-8385-1830aac69bf8_RECOMENDATION_16_9.jpg",
+         "width": 100,
+         "height": 56,
+         "fallback": false
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/a/bf8/d40a53c6-f296-4c63-8385-1830aac69bf8_ARTIST_PAGE_3_2.jpg",
+         "width": 305,
+         "height": 203,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/bf8/d40a53c6-f296-4c63-8385-1830aac69bf8_RETINA_PORTRAIT_16_9.jpg",
+         "width": 640,
+         "height": 360,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/6cf/4103d083-9c79-4b3b-8df0-2c23029a56cf_SOURCE",
+         "width": 2426,
+         "height": 1365,
+         "fallback": false
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/a/bf8/d40a53c6-f296-4c63-8385-1830aac69bf8_RETINA_PORTRAIT_3_2.jpg",
+         "width": 640,
+         "height": 427,
+         "fallback": false
+        }
+       ],
+       "classifications": [
+        {
+         "primary": true,
+         "segment": {
+          "id": "KZFzniwnSyZfZ7v7na",
+          "name": "Arts & Theatre"
+         },
+         "genre": {
+          "id": "KnvZfZ7vAe1",
+          "name": "Comedy"
+         },
+         "subGenre": {
+          "id": "KZazBEonSMnZfZ7vF17",
+          "name": "Comedy"
+         },
+         "type": {
+          "id": "KZAyXgnZfZ7v7nI",
+          "name": "Undefined"
+         },
+         "subType": {
+          "id": "KZFzBErXgnZfZ7v7lJ",
+          "name": "Undefined"
+         },
+         "family": false
+        }
+       ],
+       "upcomingEvents": {
+        "ticketmaster": 2,
+        "_total": 2,
+        "_filtered": 0
+       },
+       "_links": {
+        "self": {
+         "href": "/discovery/v2/attractions/K8vZ9175WY7?locale=en-us"
+        }
+       }
+      }
+     ]
+    }
+   },
+   {
+    "name": "The Gladiators Experience",
+    "type": "event",
+    "id": "G5vHZbgmf9P6p",
+    "test": false,
+    "url": "https://www.ticketmaster.co.uk/the-gladiators-experience-birmingham-02-05-2026/event/1F00635B945E51D6",
+    "locale": "en-us",
+    "images": [
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_TABLET_LANDSCAPE_LARGE_16_9.jpg",
+      "width": 2048,
+      "height": 1152,
+      "fallback": false
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_EVENT_DETAIL_PAGE_16_9.jpg",
+      "width": 205,
+      "height": 115,
+      "fallback": false
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_RETINA_PORTRAIT_16_9.jpg",
+      "width": 640,
+      "height": 360,
+      "fallback": false
+     },
+     {
+      "ratio": "4_3",
+      "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_CUSTOM.jpg",
+      "width": 305,
+      "height": 225,
+      "fallback": false
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_SOURCE",
+      "width": 2426,
+      "height": 1365,
+      "fallback": false
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_RETINA_LANDSCAPE_16_9.jpg",
+      "width": 1136,
+      "height": 639,
+      "fallback": false
+     },
+     {
+      "ratio": "3_2",
+      "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_RETINA_PORTRAIT_3_2.jpg",
+      "width": 640,
+      "height": 427,
+      "fallback": false
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_RECOMENDATION_16_9.jpg",
+      "width": 100,
+      "height": 56,
+      "fallback": false
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_TABLET_LANDSCAPE_16_9.jpg",
+      "width": 1024,
+      "height": 576,
+      "fallback": false
+     },
+     {
+      "ratio": "3_2",
+      "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_TABLET_LANDSCAPE_3_2.jpg",
+      "width": 1024,
+      "height": 683,
+      "fallback": false
+     },
+     {
+      "ratio": "3_2",
+      "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_ARTIST_PAGE_3_2.jpg",
+      "width": 305,
+      "height": 203,
+      "fallback": false
+     }
+    ],
+    "sales": {
+     "public": {
+      "startDateTime": "2025-11-28T10:00:00Z",
+      "startTBD": false,
+      "startTBA": false,
+      "endDateTime": "2026-05-02T08:00:00Z"
+     },
+     "presales": [
+      {
+       "startDateTime": "2025-11-26T10:00:00Z",
+       "endDateTime": "2025-11-28T09:00:00Z",
+       "name": "O2 Presale"
+      },
+      {
+       "startDateTime": "2025-11-26T10:00:00Z",
+       "endDateTime": "2025-11-28T09:00:00Z",
+       "name": "Artist Presale"
+      },
+      {
+       "startDateTime": "2025-11-27T10:00:00Z",
+       "endDateTime": "2025-11-28T09:00:00Z",
+       "name": "Ticketmaster Presale"
+      }
+     ]
+    },
+    "dates": {
+     "start": {
+      "localDate": "2026-05-02",
+      "dateTBD": false,
+      "dateTBA": false,
+      "timeTBA": false,
+      "noSpecificTime": true
+     },
+     "end": {
+      "localDate": "2026-08-31",
+      "approximate": false,
+      "noSpecificTime": true
+     },
+     "timezone": "Europe/London",
+     "status": {
+      "code": "offsale"
+     },
+     "spanMultipleDays": false
+    },
+    "classifications": [
+     {
+      "primary": true,
+      "segment": {
+       "id": "KZFzniwnSyZfZ7v7n1",
+       "name": "Miscellaneous"
+      },
+      "genre": {
+       "id": "KnvZfZ7vA1n",
+       "name": "Family"
+      },
+      "subGenre": {
+       "id": "KZazBEonSMnZfZ7vaav",
+       "name": "Other"
+      },
+      "type": {
+       "id": "KZAyXgnZfZ7v7nI",
+       "name": "Undefined"
+      },
+      "subType": {
+       "id": "KZFzBErXgnZfZ7v7lJ",
+       "name": "Undefined"
+      },
+      "family": false
+     }
+    ],
+    "ageRestrictions": {
+     "legalAgeEnforced": false
+    },
+    "ticketing": {
+     "safeTix": {
+      "enabled": false
+     },
+     "allInclusivePricing": {
+      "enabled": false
+     }
+    },
+    "nameOrigin": "primaryAttraction",
+    "_links": {
+     "self": {
+      "href": "/discovery/v2/events/G5vHZbgmf9P6p?locale=en-us"
+     },
+     "attractions": [
+      {
+       "href": "/discovery/v2/attractions/K8vZ917rRX0?locale=en-us"
+      }
+     ],
+     "venues": [
+      {
+       "href": "/discovery/v2/venues/KovZ91771yf?locale=en-us"
+      }
+     ]
+    },
+    "_embedded": {
+     "venues": [
+      {
+       "name": "NEC",
+       "type": "venue",
+       "id": "KovZ91771yf",
+       "test": false,
+       "url": "https://www.ticketmaster.co.uk/nec-tickets-birmingham/venue/256163",
+       "locale": "en-us",
+       "postalCode": "B40 1NT",
+       "timezone": "Europe/London",
+       "city": {
+        "name": "Birmingham"
+       },
+       "country": {
+        "name": "Great Britain",
+        "countryCode": "GB"
+       },
+       "address": {
+        "line1": "The NEC"
+       },
+       "location": {
+        "longitude": "-1.71715800",
+        "latitude": "52.45326600"
+       },
+       "markets": [
+        {
+         "name": "All of United Kingdom",
+         "id": "201"
+        },
+        {
+         "name": "Midlands and Central",
+         "id": "204"
+        }
+       ],
+       "dmas": [
+        {
+         "id": 601
+        },
+        {
+         "id": 604
+        }
+       ],
+       "parkingDetail": "There is ample car parking (£10 per day for standard and disabled, £20 per day for NEC Express Parking). Shuttle buses operate between the car parks and the show. If you're using a sat nav the postcode is B40 1NT.",
+       "upcomingEvents": {
+        "universe": 1063,
+        "ticketmaster": 1,
+        "_total": 1064,
+        "_filtered": 0
+       },
+       "ada": {
+        "adaPhones": "0203 375 3970.",
+        "adaCustomCopy": "To better accommodate your needs, Moscow State Circus has requested that all special seating accommodations be solicited only through their representatives. Please contact a Box Office for further help with your ticket purchase.* Advance ticket purchase may be required. \n\n* Box office information is subject to change.",
+        "adaHours": "Monday - Sunday 09.00 to 21.00 "
+       },
+       "_links": {
+        "self": {
+         "href": "/discovery/v2/venues/KovZ91771yf?locale=en-us"
+        }
+       }
+      }
+     ],
+     "attractions": [
+      {
+       "name": "The Gladiators Experience",
+       "type": "attraction",
+       "id": "K8vZ917rRX0",
+       "test": false,
+       "url": "https://www.ticketmaster.com/the-gladiators-experience-tickets/artist/4012789",
+       "locale": "en-us",
+       "images": [
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_EVENT_DETAIL_PAGE_16_9.jpg",
+         "width": 205,
+         "height": 115,
+         "fallback": false
+        },
+        {
+         "ratio": "4_3",
+         "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_CUSTOM.jpg",
+         "width": 305,
+         "height": 225,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_SOURCE",
+         "width": 2426,
+         "height": 1365,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_RETINA_LANDSCAPE_16_9.jpg",
+         "width": 1136,
+         "height": 639,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_TABLET_LANDSCAPE_16_9.jpg",
+         "width": 1024,
+         "height": 576,
+         "fallback": false
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_TABLET_LANDSCAPE_3_2.jpg",
+         "width": 1024,
+         "height": 683,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_TABLET_LANDSCAPE_LARGE_16_9.jpg",
+         "width": 2048,
+         "height": 1152,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_RETINA_PORTRAIT_16_9.jpg",
+         "width": 640,
+         "height": 360,
+         "fallback": false
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_RETINA_PORTRAIT_3_2.jpg",
+         "width": 640,
+         "height": 427,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_RECOMENDATION_16_9.jpg",
+         "width": 100,
+         "height": 56,
+         "fallback": false
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/a/408/ea0b9df6-5dfb-428a-b395-ec5cb6c5e408_ARTIST_PAGE_3_2.jpg",
+         "width": 305,
+         "height": 203,
+         "fallback": false
+        }
+       ],
+       "classifications": [
+        {
+         "primary": true,
+         "segment": {
+          "id": "KZFzniwnSyZfZ7v7n1",
+          "name": "Miscellaneous"
+         },
+         "genre": {
+          "id": "KnvZfZ7vA1n",
+          "name": "Family"
+         },
+         "subGenre": {
+          "id": "KZazBEonSMnZfZ7vaav",
+          "name": "Other"
+         },
+         "type": {
+          "id": "KZAyXgnZfZ7v7lt",
+          "name": "Event Style"
+         },
+         "subType": {
+          "id": "KZFzBErXgnZfZ7vAF7",
+          "name": "Fan Experiences"
+         },
+         "family": false
+        }
+       ],
+       "upcomingEvents": {
+        "universe": 1063,
+        "ticketmaster": 1,
+        "_total": 1064,
+        "_filtered": 0
+       },
+       "_links": {
+        "self": {
+         "href": "/discovery/v2/attractions/K8vZ917rRX0?locale=en-us"
+        }
+       }
+      }
+     ]
+    }
+   },
+   {
+    "name": "The James Brown Experience",
+    "type": "event",
+    "id": "1kuOv-qtGAG5vWO",
+    "test": false,
+    "url": "https://www.ticketmaster.co.uk/the-james-brown-experience-york-04-05-2026/event/360061769C2C1F60",
+    "locale": "en-us",
+    "images": [
+     {
+      "ratio": "4_3",
+      "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_CUSTOM.jpg",
+      "width": 305,
+      "height": 225,
+      "fallback": false
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_TABLET_LANDSCAPE_16_9.jpg",
+      "width": 1024,
+      "height": 576,
+      "fallback": false
+     },
+     {
+      "ratio": "3_2",
+      "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_TABLET_LANDSCAPE_3_2.jpg",
+      "width": 1024,
+      "height": 683,
+      "fallback": false
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_RETINA_LANDSCAPE_16_9.jpg",
+      "width": 1136,
+      "height": 639,
+      "fallback": false
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_EVENT_DETAIL_PAGE_16_9.jpg",
+      "width": 205,
+      "height": 115,
+      "fallback": false
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_RETINA_PORTRAIT_16_9.jpg",
+      "width": 640,
+      "height": 360,
+      "fallback": false
+     },
+     {
+      "ratio": "3_2",
+      "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_ARTIST_PAGE_3_2.jpg",
+      "width": 305,
+      "height": 203,
+      "fallback": false
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_TABLET_LANDSCAPE_LARGE_16_9.jpg",
+      "width": 2048,
+      "height": 1152,
+      "fallback": false
+     },
+     {
+      "ratio": "3_2",
+      "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_RETINA_PORTRAIT_3_2.jpg",
+      "width": 640,
+      "height": 427,
+      "fallback": false
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_SOURCE",
+      "width": 2426,
+      "height": 1365,
+      "fallback": false
+     },
+     {
+      "ratio": "16_9",
+      "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_RECOMENDATION_16_9.jpg",
+      "width": 100,
+      "height": 56,
+      "fallback": false
+     }
+    ],
+    "sales": {
+     "public": {
+      "startDateTime": "2025-01-24T10:00:00Z",
+      "startTBD": false,
+      "startTBA": false,
+      "endDateTime": "2026-08-04T18:00:00Z"
+     },
+     "presales": [
+      {
+       "startDateTime": "2024-11-27T10:00:00Z",
+       "endDateTime": "2024-11-29T09:00:00Z",
+       "name": "Priority from O2"
+      },
+      {
+       "startDateTime": "2024-11-28T10:00:00Z",
+       "endDateTime": "2024-11-29T09:00:00Z",
+       "name": "Ticketmaster Presale"
+      },
+      {
+       "startDateTime": "2024-11-28T10:00:00Z",
+       "endDateTime": "2024-11-29T09:00:00Z",
+       "name": "Live Nation Presale"
+      },
+      {
+       "startDateTime": "2024-11-28T10:00:00Z",
+       "endDateTime": "2024-11-29T09:00:00Z",
+       "name": "Cuffe & Taylor Presale"
+      }
+     ]
+    },
+    "dates": {
+     "start": {
+      "localDate": "2026-05-04",
+      "localTime": "19:00:00",
+      "dateTime": "2026-05-04T18:00:00Z",
+      "dateTBD": false,
+      "dateTBA": false,
+      "timeTBA": false,
+      "noSpecificTime": false
+     },
+     "timezone": "Europe/London",
+     "status": {
+      "code": "cancelled"
+     },
+     "spanMultipleDays": false
+    },
+    "classifications": [
+     {
+      "primary": true,
+      "segment": {
+       "id": "KZFzniwnSyZfZ7v7nJ",
+       "name": "Music"
+      },
+      "genre": {
+       "id": "KnvZfZ7vAvl",
+       "name": "Other"
+      },
+      "subGenre": {
+       "id": "KZazBEonSMnZfZ7vk1I",
+       "name": "Other"
+      },
+      "type": {
+       "id": "KZAyXgnZfZ7v7nI",
+       "name": "Undefined"
+      },
+      "subType": {
+       "id": "KZFzBErXgnZfZ7v7lJ",
+       "name": "Undefined"
+      },
+      "family": false
+     }
+    ],
+    "promoter": {
+     "id": "3251",
+     "name": "CUFFE & TAYLOR EVENT MANAGEMENT",
+     "description": "CUFFE & TAYLOR EVENT MANAGEMENT / NTL / GBR"
+    },
+    "promoters": [
+     {
+      "id": "3251",
+      "name": "CUFFE & TAYLOR EVENT MANAGEMENT",
+      "description": "CUFFE & TAYLOR EVENT MANAGEMENT / NTL / GBR"
+     },
+     {
+      "id": "3251",
+      "name": "CUFFE & TAYLOR EVENT MANAGEMENT",
+      "description": "CUFFE & TAYLOR EVENT MANAGEMENT / NTL / GBR"
+     },
+     {
+      "id": "4110",
+      "name": "LIVE NATION MUSIC UK LTD",
+      "description": "LIVE NATION MUSIC UK LTD / NTL / GBR"
+     }
+    ],
+    "info": "Not endorsed by nor affiliated with the James Brown Estate or The James Brown Family Foundation",
+    "pleaseNote": "Under 16s accompanied by an adult 18+. A max of 6 tickets per person and per household applies. Tickets in excess of 6 will be cancelled.",
+    "ticketLimit": {
+     "info": "Please note: There is a ticket Limit of 6 tickets per person and per credit card on this event"
+    },
+    "ageRestrictions": {
+     "legalAgeEnforced": false
+    },
+    "ticketing": {
+     "safeTix": {
+      "enabled": false
+     },
+     "allInclusivePricing": {
+      "enabled": false
+     }
+    },
+    "nameOrigin": "custom",
+    "_links": {
+     "self": {
+      "href": "/discovery/v2/events/1kuOv-qtGAG5vWO?locale=en-us"
+     },
+     "attractions": [
+      {
+       "href": "/discovery/v2/attractions/K8vZ917qOX0?locale=en-us"
+      }
+     ],
+     "venues": [
+      {
+       "href": "/discovery/v2/venues/KovZ9177nnV?locale=en-us"
+      }
+     ]
+    },
+    "_embedded": {
+     "venues": [
+      {
+       "name": "York Barbican",
+       "type": "venue",
+       "id": "KovZ9177nnV",
+       "test": false,
+       "url": "https://www.ticketmaster.co.uk/york-barbican-tickets-york/venue/442551",
+       "locale": "en-us",
+       "postalCode": "YO10 4NT",
+       "timezone": "Europe/London",
+       "city": {
+        "name": "York"
+       },
+       "country": {
+        "name": "Great Britain",
+        "countryCode": "GB"
+       },
+       "address": {
+        "line1": "Paragon Street"
+       },
+       "location": {
+        "longitude": "-1.07362900",
+        "latitude": "53.95386000"
+       },
+       "markets": [
+        {
+         "name": "All of United Kingdom",
+         "id": "201"
+        },
+        {
+         "name": "North and North East",
+         "id": "206"
+        }
+       ],
+       "dmas": [
+        {
+         "id": 601
+        },
+        {
+         "id": 606
+        }
+       ],
+       "boxOfficeInfo": {
+        "phoneNumberDetail": "You can contact the York Barbican box office by emailing ticketing@yorkbarbican.co.uk",
+        "openHoursDetail": "Ticket collection is available on show nights only. Please bring along your Ticketmaster booking reference.",
+        "willCallDetail": "Letters of Authorisation accepted? YES TM Booking Reference Number Required? YES Credit/Debit Card needed for I.D.? NO"
+       },
+       "parkingDetail": "The nearest car park is Q-Park, Kent Street, York, YO10 4AH. For more information about the car park, please visit Q-Parks website www.q-park.co.uk or phone Q-Park on 01904 639040.",
+       "accessibleSeatingDetail": "York Barbican is accessible to everyone. For more information please visit www.yorkbarbican.co.uk/venue-info/accessibility/",
+       "generalInfo": {
+        "generalRule": "Adult backpacks, large umbrellas, holdalls, luggage, oversized bags and cushions (larger than 35cm x 40cm x 19cm) will not be permitted into the venue. In addition, certain items are also not permitted into the venue which may ruin the enjoyment or viewing experience of others. For more information, please visit https://www.yorkbarbican.co.uk/venue-info/faqs/",
+        "childRule": "Under 14s must be accompanied by an adult."
+       },
+       "upcomingEvents": {
+        "universe": 5,
+        "ticketmaster": 156,
+        "_total": 161,
+        "_filtered": 0
+       },
+       "ada": {
+        "adaPhones": "If you are struggling to purchase tickets online, they can be purchased over the phone via 01904 313297.\nPhone Lines operating times Monday to Friday 0900am to 1730pm\n",
+        "adaCustomCopy": "For the quickest experience, you can book both wheelchair and ambulant accessibility tickets online through the York Barbican website.\nA free companion ticket is available to those that require one. Proof of eligibility will be required.\n\nTickets can also be booked in person at our Box Office on event day. Our Box Office is only open on event days an hour before the event starts, so we highly recommend booking through the methods provided above.\n\n",
+        "adaHours": "You can contact the York Barbican box office by emailing ticketing@yorkbarbican.co.uk"
+       },
+       "_links": {
+        "self": {
+         "href": "/discovery/v2/venues/KovZ9177nnV?locale=en-us"
+        }
+       }
+      }
+     ],
+     "attractions": [
+      {
+       "name": "The James Brown Experience",
+       "type": "attraction",
+       "id": "K8vZ917qOX0",
+       "test": false,
+       "url": "https://www.ticketmaster.com/the-james-brown-experience-tickets/artist/3361484",
+       "locale": "en-us",
+       "images": [
+        {
+         "ratio": "4_3",
+         "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_CUSTOM.jpg",
+         "width": 305,
+         "height": 225,
+         "fallback": false
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_RETINA_PORTRAIT_3_2.jpg",
+         "width": 640,
+         "height": 427,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_SOURCE",
+         "width": 2426,
+         "height": 1365,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_RECOMENDATION_16_9.jpg",
+         "width": 100,
+         "height": 56,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_TABLET_LANDSCAPE_16_9.jpg",
+         "width": 1024,
+         "height": 576,
+         "fallback": false
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_TABLET_LANDSCAPE_3_2.jpg",
+         "width": 1024,
+         "height": 683,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_RETINA_LANDSCAPE_16_9.jpg",
+         "width": 1136,
+         "height": 639,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_EVENT_DETAIL_PAGE_16_9.jpg",
+         "width": 205,
+         "height": 115,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_RETINA_PORTRAIT_16_9.jpg",
+         "width": 640,
+         "height": 360,
+         "fallback": false
+        },
+        {
+         "ratio": "3_2",
+         "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_ARTIST_PAGE_3_2.jpg",
+         "width": 305,
+         "height": 203,
+         "fallback": false
+        },
+        {
+         "ratio": "16_9",
+         "url": "https://s1.ticketm.net/dam/a/f0b/b3de1a45-1fc6-41fb-8afc-4e5041a8ff0b_TABLET_LANDSCAPE_LARGE_16_9.jpg",
+         "width": 2048,
+         "height": 1152,
+         "fallback": false
+        }
+       ],
+       "classifications": [
+        {
+         "primary": true,
+         "segment": {
+          "id": "KZFzniwnSyZfZ7v7nJ",
+          "name": "Music"
+         },
+         "genre": {
+          "id": "KnvZfZ7vAe6",
+          "name": "Undefined"
+         },
+         "subGenre": {
+          "id": "KZazBEonSMnZfZ7v6JI",
+          "name": "Undefined"
+         },
+         "type": {
+          "id": "KZAyXgnZfZ7v7lt",
+          "name": "Event Style"
+         },
+         "subType": {
+          "id": "KZFzBErXgnZfZ7vAAt",
+          "name": "Touring Show/Production"
+         },
+         "family": false
+        }
+       ],
+       "upcomingEvents": {
+        "mfx-nl": 3,
+        "ticketmaster": 1,
+        "_total": 4,
+        "_filtered": 0
+       },
+       "_links": {
+        "self": {
+         "href": "/discovery/v2/attractions/K8vZ917qOX0?locale=en-us"
+        }
+       }
+      }
+     ]
+    }
+   }
+  ]
+ },
+ "_links": {
+  "first": {
+   "href": "/discovery/v2/events.json?countryCode=GB&page=0&size=5&sort=date,asc"
+  },
+  "self": {
+   "href": "/discovery/v2/events.json?size=5&countryCode=GB&sort=date%2Casc"
+  },
+  "next": {
+   "href": "/discovery/v2/events.json?countryCode=GB&page=1&size=5&sort=date,asc"
+  },
+  "last": {
+   "href": "/discovery/v2/events.json?countryCode=GB&page=1999&size=5&sort=date,asc"
+  }
+ },
+ "page": {
+  "size": 5,
+  "totalElements": 10000,
+  "totalPages": 2000,
+  "number": 0
+ }
+}
