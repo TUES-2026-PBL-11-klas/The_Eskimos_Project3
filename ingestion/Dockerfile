@@ -10,6 +10,7 @@ WORKDIR /app
 # exist in the runtime stage). Put the venv at a fixed path we copy out later.
 ENV UV_PYTHON_DOWNLOADS=never \
     UV_PROJECT_ENVIRONMENT=/app/.venv
+# hadolint ignore=DL3013
 RUN pip install --no-cache-dir uv
 # Lockfiles only → this layer caches unless deps change.
 COPY pyproject.toml uv.lock ./

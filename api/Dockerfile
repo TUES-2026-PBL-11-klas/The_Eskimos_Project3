@@ -8,6 +8,7 @@ FROM python:3.11-slim AS uv-base
 WORKDIR /app
 ENV UV_PYTHON_DOWNLOADS=never \
     UV_PROJECT_ENVIRONMENT=/app/.venv
+# hadolint ignore=DL3013
 RUN pip install --no-cache-dir uv
 COPY pyproject.toml uv.lock ./
 

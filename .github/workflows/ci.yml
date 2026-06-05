@@ -13,7 +13,19 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  # ── Lint: ruff + mypy --strict per Python service ────────────────────────────────────────────
+  # ── Secret scanning (gitleaks) ───────────────────────────────────────────────
+  secret-scan:
+    name: Secret scan (gitleaks)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  # ── Lint: ruff + mypy --strict per Python service ───────────────────────────
   lint-python:
     name: Lint (${{ matrix.service }})
     runs-on: ubuntu-latest
@@ -39,7 +51,7 @@ jobs:
         working-directory: ${{ matrix.service }}
         run: uv run mypy src
 
-  # ── Tests: unit + integration (testcontainers Postgres) with a coverage gate ─────────────────
+  # ── Tests: unit + integration (testcontainers Postgres) with coverage gate ──
   test-python:
     name: Test (${{ matrix.service }})
     runs-on: ubuntu-latest
@@ -57,10 +69,9 @@ jobs:
         run: uv sync --frozen
       - name: pytest (unit + integration) with coverage gate
         working-directory: ${{ matrix.service }}
-        # Docker is preinstalled on ubuntu runners, so testcontainers' integration tests run here.
         run: uv run pytest --cov=${{ matrix.service }} --cov-report=term-missing --cov-fail-under=60
 
-  # ── Frontend: eslint + typecheck + production build ──────────────────────────────────────────
+  # ── Frontend: eslint + typecheck + production build ─────────────────────────
   frontend:
     name: Frontend checks
     runs-on: ubuntu-latest
@@ -84,7 +95,7 @@ jobs:
         working-directory: frontend
         run: npm run build
 
-  # ── Dockerfile lint ──────────────────────────────────────────────────────────────────────────
+  # ── Dockerfile lint ──────────────────────────────────────────────────────────
   hadolint:
     name: hadolint (${{ matrix.dockerfile }})
     runs-on: ubuntu-latest
@@ -101,10 +112,10 @@ jobs:
         with:
           dockerfile: ${{ matrix.dockerfile }}
 
-  # ── Build → scan → push (push only on main; build+scan also on PRs) ──────────────────────────
+  # ── Build → scan → push (push only on main; build+scan also on PRs) ─────────
   build-push:
     name: Build & push (${{ matrix.service }})
-    needs: [lint-python, test-python, frontend, hadolint]
+    needs: [secret-scan, lint-python, test-python, frontend, hadolint]
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -146,10 +157,10 @@ jobs:
           docker push "${{ steps.img.outputs.image }}:${{ github.sha }}"
           docker push "${{ steps.img.outputs.image }}:latest"
 
-  # ── Discord notification on any failure ──────────────────────────────────────────────────────
+  # ── Discord notification on any failure ─────────────────────────────────────
   notify-failure:
     name: Notify Discord on failure
-    needs: [lint-python, test-python, frontend, hadolint, build-push]
+    needs: [secret-scan, lint-python, test-python, frontend, hadolint, build-push]
     if: failure()
     runs-on: ubuntu-latest
     steps:

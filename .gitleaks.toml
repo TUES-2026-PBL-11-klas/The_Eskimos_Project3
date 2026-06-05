@@ -1,0 +1,7 @@
+title = "EventHub gitleaks configuration"
+
+[allowlist]
+description = "SealedSecret blobs are encrypted ciphertext — safe to commit"
+paths = [
+    '''infra/k8s/sealed/.*\.yaml''',
+]
