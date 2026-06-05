@@ -19,7 +19,7 @@ secrets:
   db: eventhub-db
   alerts: eventhub-alerts
 
-# Rolling update with maxUnavailable=0 → zero-downtime even at replicas=1 (fits the 2 GB node).
+# Rolling update with maxUnavailable=0 → zero-downtime even at replicas=1 (fits the 4 GB node).
 api:
   replicas: 1
   port: 8000

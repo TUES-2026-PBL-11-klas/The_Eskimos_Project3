@@ -25,7 +25,7 @@ variable "k8s_version_prefix" {
 variable "node_size" {
   description = "Droplet size slug for the single worker node pool."
   type        = string
-  default     = "s-2vcpu-2gb"
+  default     = "s-2vcpu-4gb"
 }
 
 variable "node_count" {

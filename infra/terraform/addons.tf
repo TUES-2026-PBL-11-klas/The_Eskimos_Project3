@@ -1,5 +1,5 @@
 # Platform add-ons as IaC (helm_release), not ad-hoc `helm install`. Resource requests are
-# deliberately tiny to fit a single s-2vcpu-2gb node.
+# deliberately tiny to fit a single s-2vcpu-4gb node.
 #
 # NOTE: the cert-manager *ClusterIssuer* is intentionally NOT here. A kubernetes_manifest for a
 # CRD installed in the same apply fails at plan time (the CRD doesn't exist yet). The ClusterIssuer
