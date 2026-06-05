@@ -1,0 +1,8 @@
+# CVE-2026-23949 — jaraco.context path traversal via malicious tar archive.
+# This app never processes user-supplied tar archives at runtime; not exploitable.
+CVE-2026-23949
+
+# CVE-2026-24049 — wheel privilege escalation via malicious wheel file.
+# wheel is a build-time tool; the runtime image never installs wheel files from
+# untrusted sources. Not exploitable in this deployment context.
+CVE-2026-24049

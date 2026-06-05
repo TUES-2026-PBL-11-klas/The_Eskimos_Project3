@@ -155,6 +155,7 @@ jobs:
           severity: HIGH,CRITICAL
           ignore-unfixed: true
           exit-code: "1"
+          trivyignores: .trivyignore
       - name: Push :sha and :latest (main only)
         if: github.event_name == 'push' && github.ref == 'refs/heads/main'
         run: |
