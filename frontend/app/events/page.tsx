@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 import EventList from "@/components/EventList";
 import FilterBar from "@/components/FilterBar";
 import Pagination from "@/components/Pagination";
-import { getCategories, getCities, getEvents } from "@/lib/api/endpoints";
+import { getCategories, getEvents, getVenues } from "@/lib/api/endpoints";
 import type { EventFilters } from "@/lib/api/types";
 
 export const metadata: Metadata = { title: "All events" };
@@ -21,15 +21,17 @@ export default async function EventsPage({ searchParams }: { searchParams: Searc
     page: Number(one(sp.page)) || 1,
     category: one(sp.category),
     city: one(sp.city),
+    venue_id: one(sp.venue_id),
     q: one(sp.q),
     date_from: one(sp.date_from),
   };
 
-  const [result, categories, cities] = await Promise.all([
+  const [result, categories, venues] = await Promise.all([
     getEvents(filters),
     getCategories(),
-    getCities(),
+    getVenues(),
   ]);
+  const cities = [...new Set(venues.map((v) => v.city).filter(Boolean))].sort() as string[];
 
   const activeCategory = filters.category;
 
@@ -46,7 +48,7 @@ export default async function EventsPage({ searchParams }: { searchParams: Searc
         </p>
       </header>
 
-      <FilterBar categories={categories} cities={cities} />
+      <FilterBar categories={categories} cities={cities} venues={venues} />
 
       <div className="mt-8">
         <EventList events={result.items} />

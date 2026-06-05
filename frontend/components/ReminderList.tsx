@@ -8,7 +8,6 @@ import { formatDateTime } from "@/lib/format";
 
 const STATUS_STYLE: Record<ReminderStatus, string> = {
   pending: "border-accent/40 bg-accent/10 text-accent",
-  sent: "border-success/40 bg-success/10 text-success",
   cancelled: "border-border bg-surface-2 text-muted",
 };
 

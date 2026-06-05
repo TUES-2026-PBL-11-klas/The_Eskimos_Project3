@@ -33,8 +33,8 @@ export default function RemindButton({
     <div className="flex flex-col gap-1.5">
       <button
         type="button"
-        onClick={() => {
-          const res = addReminder(event);
+        onClick={async () => {
+          const res = await addReminder(event);
           setError(res.ok ? "" : (res.error ?? "Couldn't set a reminder."));
         }}
         className={`inline-flex items-center gap-2 rounded-lg border border-border bg-surface px-5 py-2.5 text-sm font-semibold text-foreground transition hover:border-accent ${className}`}

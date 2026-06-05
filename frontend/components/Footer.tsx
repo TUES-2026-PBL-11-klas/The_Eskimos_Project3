@@ -12,9 +12,6 @@ export default function Footer() {
           <Link href="/venues" className="hover:text-foreground">
             Venues
           </Link>
-          <Link href="/about" className="hover:text-foreground">
-            About
-          </Link>
         </nav>
       </div>
     </footer>

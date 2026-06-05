@@ -4,13 +4,15 @@ import { useRouter } from "next/navigation";
 
 import ReminderList from "@/components/ReminderList";
 import { EmptyState } from "@/components/states";
-import { categoryStyle } from "@/lib/categories";
 import { useDemo } from "@/lib/demo/store";
 import { formatDate } from "@/lib/format";
 
+const LEAD_OPTIONS = [1, 2, 6, 12, 24, 48, 72];
+
 export default function AccountPage() {
   const router = useRouter();
-  const { hydrated, loggedIn, user, sessions, revokeSession, logout } = useDemo();
+  const { hydrated, loggedIn, user, sessions, revokeSession, logout, updatePreferences } =
+    useDemo();
 
   if (!hydrated) {
     return (
@@ -69,39 +71,26 @@ export default function AccountPage() {
       {/* Preferences */}
       <section className="rounded-2xl border border-border bg-surface p-6">
         <h2 className="mb-4 text-lg font-semibold text-foreground">Preferences</h2>
-        <dl className="grid gap-4 sm:grid-cols-3">
+        <dl className="grid gap-4 sm:grid-cols-2">
           <div>
             <dt className="text-xs uppercase tracking-wide text-muted">Default reminder lead</dt>
-            <dd className="mt-1 font-semibold text-foreground">
-              {preferences.default_lead_hours} hours before
+            <dd className="mt-1.5">
+              <select
+                value={preferences.default_lead_hours}
+                onChange={(e) => updatePreferences(Number(e.target.value))}
+                className="rounded-lg border border-border bg-surface-2 px-3 py-2 text-sm font-semibold text-foreground focus:border-accent focus:outline-none"
+              >
+                {LEAD_OPTIONS.map((h) => (
+                  <option key={h} value={h}>
+                    {h} hour{h === 1 ? "" : "s"} before
+                  </option>
+                ))}
+              </select>
             </dd>
           </div>
           <div>
-            <dt className="text-xs uppercase tracking-wide text-muted">Favourite categories</dt>
-            <dd className="mt-1.5 flex flex-wrap gap-1.5">
-              {preferences.categories.length === 0 ? (
-                <span className="text-sm text-muted">None</span>
-              ) : (
-                preferences.categories.map((c) => {
-                  const s = categoryStyle(c);
-                  return (
-                    <span
-                      key={c}
-                      className="rounded-full px-2.5 py-0.5 text-xs font-medium"
-                      style={{ background: s.tint, color: s.accent }}
-                    >
-                      {c}
-                    </span>
-                  );
-                })
-              )}
-            </dd>
-          </div>
-          <div>
-            <dt className="text-xs uppercase tracking-wide text-muted">Cities</dt>
-            <dd className="mt-1 font-semibold text-foreground">
-              {preferences.cities.length ? preferences.cities.join(", ") : "All"}
-            </dd>
+            <dt className="text-xs uppercase tracking-wide text-muted">Timezone</dt>
+            <dd className="mt-1 font-semibold text-foreground">{preferences.timezone}</dd>
           </div>
         </dl>
       </section>
@@ -125,7 +114,7 @@ export default function AccountPage() {
                   )}
                 </p>
                 <p className="mt-1 text-xs text-muted">
-                  {s.ip} · since {formatDate(s.created_at)}
+                  {s.ip ? `${s.ip} · ` : ""}since {formatDate(s.created_at)}
                 </p>
               </div>
               {!s.current && (

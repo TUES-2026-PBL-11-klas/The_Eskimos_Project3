@@ -34,7 +34,7 @@ export default function VenueList({ venues }: { venues: Venue[] }) {
             {byCity.get(city)!.map((v) => (
               <Link
                 key={v.id}
-                href={`/events?city=${encodeURIComponent(city)}`}
+                href={`/events?venue_id=${v.id}`}
                 className="group flex items-center gap-3 rounded-2xl border border-border bg-surface p-4 transition hover:border-accent/60 hover:bg-surface-2"
               >
                 <span className="grid h-10 w-10 place-items-center rounded-xl bg-surface-2 text-lg">

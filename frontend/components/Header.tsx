@@ -9,7 +9,6 @@ import SearchBar from "./SearchBar";
 const PUBLIC_NAV = [
   { href: "/events", label: "Events" },
   { href: "/venues", label: "Venues" },
-  { href: "/about", label: "About" },
 ];
 
 const AUTHED_NAV = [

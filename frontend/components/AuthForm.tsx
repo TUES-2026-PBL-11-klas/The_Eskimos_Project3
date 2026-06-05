@@ -4,8 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 
-import { ApiError } from "@/lib/api/types";
-import { mockLogin, mockRegister } from "@/lib/auth/mock-auth";
+import { useDemo } from "@/lib/demo/store";
 
 const MIN_PASSWORD = 8;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
@@ -34,6 +33,7 @@ const COPY = {
 
 export default function AuthForm({ mode }: { mode: Mode }) {
   const router = useRouter();
+  const { login, register } = useDemo();
   const copy = COPY[mode];
   const isRegister = mode === "register";
 
@@ -71,25 +71,21 @@ export default function AuthForm({ mode }: { mode: Mode }) {
     if (Object.keys(fieldErrors).length > 0) return;
 
     setLoading(true);
-    try {
-      if (isRegister) {
-        await mockRegister({ email, password, display_name: name.trim() });
-      } else {
-        await mockLogin({ email, password });
-      }
+    const result = isRegister
+      ? await register(email, password, name.trim())
+      : await login(email, password);
+
+    if (result.ok) {
       setDone(true);
-      // On success the real flow lands an authenticated session; send the user home.
+      // Authenticated session is set (httpOnly cookie); send the user home.
       router.push("/");
-    } catch (err) {
-      if (err instanceof ApiError) {
-        if (err.status === 409) setErrors({ email: err.message });
-        else if (err.status === 422) setFormError("Please check the highlighted fields.");
-        else setFormError(err.message);
-      } else {
-        setFormError("Something went wrong. Please try again.");
-      }
-      setLoading(false);
+      return;
     }
+
+    if (result.status === 409) setErrors({ email: result.error ?? "An account with this email already exists." });
+    else if (result.status === 422) setFormError("Please check the highlighted fields.");
+    else setFormError(result.error ?? "Something went wrong. Please try again.");
+    setLoading(false);
   }
 
   const inputCls = (hasError?: string) =>
@@ -189,11 +185,6 @@ export default function AuthForm({ mode }: { mode: Mode }) {
           </Link>
         </p>
       </div>
-
-      <p className="mt-4 text-center text-xs text-muted">
-        Demo: log in with password{" "}
-        <code className="rounded bg-surface-2 px-1">wrong</code> to see the error state.
-      </p>
     </main>
   );
 }

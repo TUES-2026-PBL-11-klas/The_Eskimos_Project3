@@ -1,6 +1,7 @@
 # Frontend-only local stack. This brings up ONLY the EventHub frontend container.
 # It does NOT start the API or any database — those live in the API service's own
-# compose. The frontend runs fully isolated against its in-memory mock data.
+# compose. By default it runs LIVE against that API; set EVENTHUB_USE_MOCK=true to
+# run fully isolated on the in-memory mock data (no API required).
 
 services:
   frontend:
@@ -12,9 +13,11 @@ services:
     ports:
       - "3000:3000"
     environment:
-      # Isolated mode: serve the built-in mock data, no API required.
-      EVENTHUB_USE_MOCK: "true"
-      # Where the API WOULD be reached if you set EVENTHUB_USE_MOCK=false.
-      # The API is not started here; run it from its own service/compose.
+      # Live by default; override with `EVENTHUB_USE_MOCK=true docker compose up`.
+      EVENTHUB_USE_MOCK: "${EVENTHUB_USE_MOCK:-false}"
+      # The API service (run it from api/docker-compose.yml). On Docker Desktop the
+      # host is reached via host.docker.internal; on Linux the extra_hosts maps it.
       API_BASE_URL: "http://host.docker.internal:8000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     restart: unless-stopped

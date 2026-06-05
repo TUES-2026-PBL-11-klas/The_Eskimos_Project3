@@ -57,8 +57,10 @@ export interface Stats {
 /** Query params accepted by GET /events. */
 export interface EventFilters {
   date_from?: string;
+  date_to?: string;
   category?: string;
   city?: string;
+  venue_id?: string;
   q?: string;
   page?: number;
   size?: number;
@@ -68,10 +70,11 @@ export interface EventFilters {
 // Auth & per-user types (used by later phases; visuals only for now).
 // ---------------------------------------------------------------------------
 
+// Preferences mirror the `user_preferences` table exactly: only a default reminder
+// lead time and a timezone (no category/city arrays — those columns don't exist).
 export interface UserPreferences {
-  categories: string[];
-  cities: string[];
   default_lead_hours: number;
+  timezone: string;
 }
 
 export interface Me {
@@ -80,14 +83,22 @@ export interface Me {
   preferences: UserPreferences;
 }
 
+/**
+ * A saved event as the UI consumes it. `id` is the originating EVENT id (so
+ * `/events/[id]` links and the save-toggle match by it); `saved_id` is the
+ * `/me/saved` record id used to unsave or attach a reminder.
+ */
 export interface SavedEvent extends EventSummary {
+  saved_id: string;
   saved_at: string;
 }
 
-export type ReminderStatus = "pending" | "sent" | "cancelled";
+// The API only persists these two states (no "sent").
+export type ReminderStatus = "pending" | "cancelled";
 
 export interface Reminder {
   id: string;
+  /** UI event id, resolved by joining the API reminder's saved_event_id → saved list. */
   event_id: string;
   event_title: string;
   remind_at: string;
@@ -98,7 +109,8 @@ export interface Reminder {
 export interface SessionInfo {
   id: string;
   user_agent: string;
-  ip: string;
+  /** Not exposed by the API; present only in the mock. */
+  ip?: string;
   created_at: string;
   current: boolean;
 }

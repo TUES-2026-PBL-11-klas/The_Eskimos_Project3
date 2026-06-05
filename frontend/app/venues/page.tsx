@@ -5,6 +5,10 @@ import { getVenues } from "@/lib/api/endpoints";
 
 export const metadata: Metadata = { title: "Venues" };
 
+// Render per request so the data source (mock vs live API) is honoured at runtime
+// rather than baked in at build time.
+export const dynamic = "force-dynamic";
+
 export default async function VenuesPage() {
   const venues = await getVenues();
 

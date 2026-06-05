@@ -2,7 +2,7 @@
 
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 
-import type { Category } from "@/lib/api/types";
+import type { Category, Venue } from "@/lib/api/types";
 
 // Horizontal filter bar shown ABOVE the events grid. Filters are date-from,
 // category and city only (no price, no end date). State lives in the URL search
@@ -10,9 +10,11 @@ import type { Category } from "@/lib/api/types";
 export default function FilterBar({
   categories,
   cities,
+  venues,
 }: {
   categories: Category[];
   cities: string[];
+  venues: Venue[];
 }) {
   const router = useRouter();
   const pathname = usePathname();
@@ -29,8 +31,9 @@ export default function FilterBar({
 
   const category = sp.get("category") ?? "";
   const city = sp.get("city") ?? "";
+  const venueId = sp.get("venue_id") ?? "";
   const dateFrom = sp.get("date_from") ?? "";
-  const hasFilters = Boolean(category || city || dateFrom);
+  const hasFilters = Boolean(category || city || venueId || dateFrom);
 
   const labelCls = "mb-1.5 block text-xs font-semibold uppercase tracking-wide text-muted";
   const fieldCls =
@@ -52,7 +55,7 @@ export default function FilterBar({
             <option value="">All categories</option>
             {categories.map((c) => (
               <option key={c.slug} value={c.name}>
-                {c.name} ({c.count})
+                {c.name}
               </option>
             ))}
           </select>
@@ -72,6 +75,25 @@ export default function FilterBar({
             {cities.map((c) => (
               <option key={c} value={c}>
                 {c}
+              </option>
+            ))}
+          </select>
+        </div>
+
+        <div className="min-w-[160px] flex-1">
+          <label htmlFor="f-venue" className={labelCls}>
+            Venue
+          </label>
+          <select
+            id="f-venue"
+            className={fieldCls}
+            value={venueId}
+            onChange={(e) => update("venue_id", e.target.value)}
+          >
+            <option value="">All venues</option>
+            {venues.map((v) => (
+              <option key={v.id} value={v.id}>
+                {v.name}
               </option>
             ))}
           </select>

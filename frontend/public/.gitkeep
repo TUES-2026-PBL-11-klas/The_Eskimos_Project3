@@ -1,0 +1,3 @@
+# Keeps the public/ directory present. Next's standalone Dockerfile copies
+# public/ into the runtime image; the app currently serves no static assets
+# from here (the favicon is app/icon.svg), but the directory must exist.
