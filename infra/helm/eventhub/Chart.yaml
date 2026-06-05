@@ -1,0 +1,6 @@
+apiVersion: v2
+name: eventhub
+description: EventHub application chart — API, frontend, ingestion CronJob, Postgres, ingress, and observability.
+type: application
+version: 0.1.0
+appVersion: "0.1.0"

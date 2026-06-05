@@ -1,0 +1,13 @@
+# Dev environment overlay. Fill in your real domain + ACME email before deploying.
+image:
+  owner: tues-2026-pbl-11-klas
+
+ingress:
+  domain: eskimos.me
+  clusterIssuer: letsencrypt-prod
+
+acme:
+  email: p.kerezov123@gmail.com
+
+api:
+  corsOrigins: https://eskimos.me

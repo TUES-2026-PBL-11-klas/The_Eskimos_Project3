@@ -38,6 +38,7 @@ def _cache(response: Response) -> None:
 
 # ── /events/upcoming must come BEFORE /events/{event_id} ─────────────────────
 
+
 @router.get("/events/upcoming")
 async def upcoming_events(
     response: Response,
@@ -90,6 +91,7 @@ async def list_events(
 
 
 # ── Non-event collection endpoints ───────────────────────────────────────────
+
 
 @router.get("/categories")
 async def list_categories(

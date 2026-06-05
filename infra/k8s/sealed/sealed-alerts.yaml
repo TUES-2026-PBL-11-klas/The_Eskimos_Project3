@@ -1,0 +1,13 @@
+---
+apiVersion: bitnami.com/v1alpha1
+kind: SealedSecret
+metadata:
+  name: eventhub-alerts
+  namespace: eventhub
+spec:
+  encryptedData:
+    discord-webhook-url: AgAw0E1rYKh7LpBsDmApdEtLX7psoHxx6iwynUuqjhjx8LZ9IC7tWtO7NHclTtGpl9cYwmuEHFw69mAJekRFts+AqyiabcfDIQELc3KVsI/fZnCB+VX7xBqDNrmZ8X+Az73Vn2YqwAFRKV5Fe7idhT+Lhz+EexBdnuE5OXnQhzpF1eb7rA6JQlH6nnV6toQg/iFQZ3j2wNuXIELXX/ZL5yCf3VgyMrJadbtwuIFpT72XSMvlbEC2wOlmmdT8J7huAzQNG1O28rWKPiaZgDF0y/t4Ypjh5E1DgjqY3OmHO9LOQ/8EPAjhgHV71CBcVfF+49Yt0XT9IXFEDg1dBanG7J0KzvBHRPUcTcLRcYoingv36dPKNDZ6i7gkBVq/EeplUNfXHndRoU9795vzqQXJfh+ICCXIhzIRQ6fZOCGPnh20GtW/1ZHYLZo8w2VcN1C0ZBM35abvDxjgiEWcTaAGuxmCZs1/rd8Ror9Ph3ygQgv5KkdlUla8tYihmZV/UhrTi/H0RpAyvdFNy593XB8hf/CCQ+DvEmPHFt3QwyjlTJ7uk4f4I9cJvfKmO4TKSgV0kuMXgvPSHLbu3KR5Sh3HtLRe8tchhgOWzgalUwsVkMXpCRFaInj4AuOlfKytUT8WuHXQo8eE/Gf/AAZrNDDTo99Jg3rXBAlCc93iLJQphHi2tS+uBIc/mYV4CGO81PNsHWt/kB7E91nWPeOgROFnq3tHbeLrlHYfcHvex2TdrfHEVvoFPO9Ltu/Hgs8GAmNXaJ3cjIB1UEOpKl4IorNObE/KxNLRTnK8BAU3Q233vrVGffQT8udek+iLi7GT4QXi3+o+Ib1hiP1irhqDPY1+Ixqsvv3R5Bqq/4zr
+  template:
+    metadata:
+      name: eventhub-alerts
+      namespace: eventhub

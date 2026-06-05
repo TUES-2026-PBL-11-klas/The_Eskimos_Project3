@@ -16,6 +16,7 @@ dependencies = [
   "structlog>=24.1",
   "tenacity>=8.2",        # retry/backoff for fetches
   "tzdata>=2024.1",       # IANA tz database for zoneinfo (Windows + slim Docker)
+  "prometheus-client>=0.20", # push run metrics to the Prometheus Pushgateway
 ]
 
 [dependency-groups]

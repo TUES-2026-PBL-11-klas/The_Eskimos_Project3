@@ -1,0 +1,24 @@
+{{- if .Values.monitoring.alertmanagerConfig }}
+# Routes EventHub alerts to Discord. The kube-prometheus-stack Alertmanager discovers this
+# (alertmanagerConfigSelectorNilUsesHelmValues=false in addons.tf) and reads the webhook from
+# the sealed secret in this namespace.
+apiVersion: monitoring.coreos.com/v1alpha1
+kind: AlertmanagerConfig
+metadata:
+  name: {{ include "eventhub.fullname" . }}-discord
+  labels:
+    {{- include "eventhub.labels" . | nindent 4 }}
+spec:
+  route:
+    receiver: discord
+    groupBy: ["alertname", "namespace"]
+    groupWait: 30s
+    groupInterval: 5m
+    repeatInterval: 4h
+  receivers:
+    - name: discord
+      discordConfigs:
+        - apiURL:
+            name: {{ .Values.secrets.alerts }}
+            key: discord-webhook-url
+{{- end }}

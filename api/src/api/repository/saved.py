@@ -16,9 +16,7 @@ class SavedEventRepository(AsyncRepository[SavedEvent]):
         self._session = session
 
     async def get(self, entity_id: int) -> SavedEvent | None:
-        result = await self._session.execute(
-            select(SavedEvent).where(SavedEvent.id == entity_id)
-        )
+        result = await self._session.execute(select(SavedEvent).where(SavedEvent.id == entity_id))
         return result.scalar_one_or_none()
 
     async def get_for_user(self, saved_event_id: int, user_id: int) -> SavedEvent | None:
@@ -45,9 +43,7 @@ class SavedEventRepository(AsyncRepository[SavedEvent]):
 
     async def list_by_user(self, user_id: int) -> list[SavedEvent]:
         result = await self._session.execute(
-            select(SavedEvent)
-            .where(SavedEvent.user_id == user_id)
-            .order_by(SavedEvent.start_at)
+            select(SavedEvent).where(SavedEvent.user_id == user_id).order_by(SavedEvent.start_at)
         )
         return list(result.scalars())
 

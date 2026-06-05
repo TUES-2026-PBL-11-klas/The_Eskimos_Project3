@@ -81,12 +81,8 @@ class Event(EventsBase):
     url: Mapped[str] = mapped_column(String(1000))
     dedup_key: Mapped[str] = mapped_column(String(500))
     raw_payload: Mapped[dict[str, Any]] = mapped_column(JSONB, default=dict)
-    created_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
-    )
-    updated_at: Mapped[datetime] = mapped_column(
-        DateTime(timezone=True), server_default=func.now()
-    )
+    created_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
+    updated_at: Mapped[datetime] = mapped_column(DateTime(timezone=True), server_default=func.now())
 
     source: Mapped[Source] = relationship(back_populates="events")
     venue: Mapped[Venue | None] = relationship(back_populates="events")

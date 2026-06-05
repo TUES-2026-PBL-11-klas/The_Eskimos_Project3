@@ -104,6 +104,9 @@ async def run() -> None:
 
     _log_category_breakdown(events)
     metrics.log_summary()
+    if settings.pushgateway_url:
+        # After the batch has committed — the push is best-effort and never affects the run.
+        metrics.push(settings.pushgateway_url)
 
 
 async def _mark_sources_run(repo: EventRepository, sources: list[str]) -> None:

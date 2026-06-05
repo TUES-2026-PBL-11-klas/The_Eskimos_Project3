@@ -82,9 +82,7 @@ async def client(seeded_events_db_url: str) -> AsyncIterator[AsyncClient]:
     app = create_app()
     app.dependency_overrides[_get_events_session] = _override_session
 
-    async with AsyncClient(
-        transport=ASGITransport(app=app), base_url="http://test"
-    ) as ac:
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         yield ac
 
     await engine.dispose()

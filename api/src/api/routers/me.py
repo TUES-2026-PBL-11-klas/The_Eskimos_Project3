@@ -116,6 +116,7 @@ async def get_calendar(
 
 # ── Reminders — /reminders/due MUST come before /reminders/{reminder_id} ─────
 
+
 @router.post("/saved/{saved_id}/reminder", response_model=ReminderSchema, status_code=201)
 async def create_reminder(
     saved_id: int,
@@ -124,9 +125,7 @@ async def create_reminder(
     service: ReminderServiceDep,
 ) -> ReminderSchema:
     try:
-        return await service.create(
-            current_user.id, saved_id, req.lead_hours, req.remind_at
-        )
+        return await service.create(current_user.id, saved_id, req.lead_hours, req.remind_at)
     except EventNotFoundError:
         raise HTTPException(status_code=404, detail="Saved event not found") from None
     except ValueError as exc:

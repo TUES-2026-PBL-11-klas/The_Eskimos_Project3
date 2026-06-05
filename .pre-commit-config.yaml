@@ -1,0 +1,69 @@
+# Pre-commit hooks for the EventHub monorepo (api / ingestion / frontend).
+# Install once:  uv tool install pre-commit   (or pipx install pre-commit)
+# Then:          pre-commit install
+# Run on demand: pre-commit run --all-files
+#
+# Python lint/format (ruff) auto-discovers each service's pyproject.toml per file.
+# mypy --strict and eslint run as local hooks because they need the project's own
+# environment (uv-managed venv / node_modules), which the isolated hook repos don't have.
+minimum_pre_commit_version: "3.7.0"
+
+repos:
+  # --- Secret scanning (mirrors .github/workflows/security.yml) ---
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks
+
+  # --- Generic hygiene ---
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v5.0.0
+    hooks:
+      - id: trailing-whitespace
+      - id: end-of-file-fixer
+      - id: check-merge-conflict
+      - id: check-added-large-files
+      - id: check-yaml
+        # Helm templates are Go-templated YAML, not valid standalone YAML.
+        exclude: ^infra/helm/.*/templates/
+      - id: check-json
+
+  # --- Python lint + format (config discovered from each service's pyproject.toml) ---
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.8.6
+    hooks:
+      - id: ruff
+        name: ruff (lint, --fix)
+        args: [--fix]
+        files: ^(api|ingestion)/.*\.py$
+      - id: ruff-format
+        files: ^(api|ingestion)/.*\.py$
+
+  # --- Dockerfile lint ---
+  - repo: https://github.com/hadolint/hadolint
+    rev: v2.13.1-beta
+    hooks:
+      - id: hadolint-docker
+        files: (^|/)Dockerfile$
+
+  # --- mypy --strict per service + eslint (need the real project env) ---
+  - repo: local
+    hooks:
+      - id: mypy-ingestion
+        name: mypy --strict (ingestion)
+        language: system
+        entry: uv run --directory ingestion mypy src
+        files: ^ingestion/.*\.py$
+        pass_filenames: false
+      - id: mypy-api
+        name: mypy --strict (api)
+        language: system
+        entry: uv run --directory api mypy src
+        files: ^api/.*\.py$
+        pass_filenames: false
+      - id: eslint-frontend
+        name: eslint (frontend)
+        language: system
+        entry: npm --prefix frontend run lint
+        files: ^frontend/.*\.(ts|tsx|js|jsx|mjs|cjs)$
+        pass_filenames: false

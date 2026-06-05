@@ -8,6 +8,7 @@ FROM python:3.11-slim AS uv-base
 WORKDIR /app
 ENV UV_PYTHON_DOWNLOADS=never \
     UV_PROJECT_ENVIRONMENT=/app/.venv
+# hadolint ignore=DL3013
 RUN pip install --no-cache-dir uv
 COPY pyproject.toml uv.lock ./
 
@@ -41,6 +42,8 @@ CMD ["pytest", "--cov=api", "--cov-report=term-missing"]
 # ─────────────────────────────────────────────────────────────────────────────
 FROM python:3.11-slim AS runtime
 WORKDIR /app
+# Run as a non-root user; nothing is written to the image at runtime.
+RUN groupadd --system app && useradd --system --gid app --no-create-home app
 COPY --from=prod-deps /app/.venv /app/.venv
 COPY src ./src
 COPY migrations ./migrations
@@ -48,5 +51,6 @@ COPY alembic.ini .
 ENV PATH="/app/.venv/bin:$PATH" \
     PYTHONPATH="/app/src" \
     PYTHONUNBUFFERED=1
+USER app
 EXPOSE 8000
 CMD ["uvicorn", "api.main:app", "--host", "0.0.0.0", "--port", "8000"]

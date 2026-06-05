@@ -27,6 +27,7 @@ from api.services.saved import SavedEventService
 
 # ── events DB (read-only) ────────────────────────────────────────────────────
 
+
 async def _get_events_session() -> AsyncIterator[AsyncSession]:
     async with events_session() as session:
         yield session
@@ -50,6 +51,7 @@ EventServiceDep = Annotated[EventService, Depends(get_event_service)]
 
 
 # ── users DB (read-write) ────────────────────────────────────────────────────
+
 
 async def _get_users_session() -> AsyncIterator[AsyncSession]:
     async with users_session() as session:
@@ -131,6 +133,7 @@ MeServiceDep = Annotated[MeService, Depends(get_me_service)]
 
 
 # ── current session / user (bearer token validation) ─────────────────────────
+
 
 def _sha256(token: str) -> str:
     return hashlib.sha256(token.encode()).hexdigest()

@@ -41,6 +41,11 @@ class Settings(BaseSettings):
     # --- Retention / cleanup worker (Phase 8) ---
     cleanup_grace_days: int = 1
 
+    # --- Observability ---
+    # Prometheus Pushgateway URL (e.g. http://pushgateway:9091). Empty/None = skip the push;
+    # ingestion is a one-shot job, so it pushes its run metrics here instead of being scraped.
+    pushgateway_url: str | None = None
+
     @field_validator("bandsintown_artists", "enabled_sources", mode="before")
     @classmethod
     def _split_csv(cls, value: str | list[str]) -> list[str]:
