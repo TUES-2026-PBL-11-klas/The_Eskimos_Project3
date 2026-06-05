@@ -6,3 +6,8 @@ CVE-2026-23949
 # wheel is a build-time tool; the runtime image never installs wheel files from
 # untrusted sources. Not exploitable in this deployment context.
 CVE-2026-24049
+
+# CVE-2026-33671 — picomatch ReDoS via crafted extglob patterns.
+# The frontend runner image is a Next.js standalone bundle; no glob matching
+# is exposed to untrusted input at runtime.
+CVE-2026-33671
