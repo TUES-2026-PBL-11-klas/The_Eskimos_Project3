@@ -21,6 +21,7 @@ from api.services.auth import AuthService
 # helpers
 # ---------------------------------------------------------------------------
 
+
 def _user_repo() -> UserRepository:
     r: UserRepository = AsyncMock(spec=UserRepository)  # type: ignore[assignment]
     return r

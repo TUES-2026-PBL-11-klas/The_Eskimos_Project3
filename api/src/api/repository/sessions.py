@@ -25,9 +25,7 @@ class SessionRepository(AsyncRepository[Session]):
 
     async def list_by_user(self, user_id: int) -> list[Session]:
         result = await self._session.execute(
-            select(Session)
-            .where(Session.user_id == user_id)
-            .order_by(Session.created_at.desc())
+            select(Session).where(Session.user_id == user_id).order_by(Session.created_at.desc())
         )
         return list(result.scalars())
 

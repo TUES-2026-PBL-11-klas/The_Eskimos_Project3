@@ -68,9 +68,7 @@ def _run_alembic(command: str, url: str) -> None:
 async def _table_names(url: str) -> set[str]:
     conn = await asyncpg.connect(url.replace("postgresql+asyncpg://", "postgresql://"))
     try:
-        rows = await conn.fetch(
-            "SELECT tablename FROM pg_tables WHERE schemaname = 'public'"
-        )
+        rows = await conn.fetch("SELECT tablename FROM pg_tables WHERE schemaname = 'public'")
         return {row["tablename"] for row in rows}
     finally:
         await conn.close()
@@ -143,9 +141,7 @@ async def health_client(
     from api.main import create_app
 
     app = create_app()
-    async with AsyncClient(
-        transport=ASGITransport(app=app), base_url="http://test"
-    ) as ac:
+    async with AsyncClient(transport=ASGITransport(app=app), base_url="http://test") as ac:
         yield ac
 
     system_module.events_session = original_events

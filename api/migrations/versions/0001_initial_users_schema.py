@@ -68,9 +68,7 @@ def upgrade() -> None:
             nullable=False,
         ),
         sa.Column("default_lead_hours", sa.Integer(), server_default="24", nullable=False),
-        sa.Column(
-            "timezone", sa.String(50), server_default="'Europe/Sofia'", nullable=False
-        ),
+        sa.Column("timezone", sa.String(50), server_default="'Europe/Sofia'", nullable=False),
         sa.UniqueConstraint("user_id", name="uq_user_preferences_user_id"),
     )
 
@@ -118,13 +116,9 @@ def upgrade() -> None:
             server_default=sa.func.now(),
             nullable=False,
         ),
-        sa.UniqueConstraint(
-            "user_id", "source", "external_id", name="uq_saved_user_source_ext"
-        ),
+        sa.UniqueConstraint("user_id", "source", "external_id", name="uq_saved_user_source_ext"),
     )
-    op.create_index(
-        "ix_saved_events_user_start_at", "saved_events", ["user_id", "start_at"]
-    )
+    op.create_index("ix_saved_events_user_start_at", "saved_events", ["user_id", "start_at"])
 
     op.create_table(
         "reminders",
@@ -149,9 +143,7 @@ def upgrade() -> None:
             server_default=sa.func.now(),
             nullable=False,
         ),
-        sa.CheckConstraint(
-            "status IN ('pending', 'cancelled')", name="ck_reminders_status"
-        ),
+        sa.CheckConstraint("status IN ('pending', 'cancelled')", name="ck_reminders_status"),
     )
     op.create_index("ix_reminders_status_remind_at", "reminders", ["status", "remind_at"])
 

@@ -21,9 +21,7 @@ class MeService:
         if prefs is None:
             # Normally created at register-time; set explicit values so the schema
             # reads valid defaults even before the row is flushed.
-            prefs = UserPreferences(
-                user_id=user_id, default_lead_hours=24, timezone="Europe/Sofia"
-            )
+            prefs = UserPreferences(user_id=user_id, default_lead_hours=24, timezone="Europe/Sofia")
             await self._user_repo.add_preferences(prefs)
         return prefs
 

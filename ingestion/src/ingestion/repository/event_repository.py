@@ -174,9 +174,7 @@ class EventRepository(Repository[NormalizedEvent]):
         The sources don't expose an event end time, so the start is the only signal for
         whether an event has passed. Returns the number of events deleted.
         """
-        result = await self._session.execute(
-            delete(Event).where(Event.start_at < cutoff)
-        )
+        result = await self._session.execute(delete(Event).where(Event.start_at < cutoff))
         return cast("CursorResult[Any]", result).rowcount
 
     # --- mapping -------------------------------------------------------------------------

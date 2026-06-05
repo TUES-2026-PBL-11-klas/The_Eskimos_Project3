@@ -1,0 +1,87 @@
+name: CD
+
+# Runs after CI succeeds on main (D2: authenticate with a DO token, fetch a fresh kubeconfig).
+on:
+  workflow_run:
+    workflows: ["CI"]
+    types: [completed]
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: cd-eventhub
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    name: Deploy to DOKS
+    # Only deploy the exact SHA whose CI passed.
+    if: ${{ github.event.workflow_run.conclusion == 'success' }}
+    runs-on: ubuntu-latest
+    env:
+      CLUSTER: eventhub-doks
+      NAMESPACE: eventhub
+      IMAGE_TAG: ${{ github.event.workflow_run.head_sha }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ${{ github.event.workflow_run.head_sha }}
+
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
+        with:
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+      - name: Install helm
+        uses: azure/setup-helm@v4
+        with:
+          version: v3.16.2
+
+      - name: Fetch kubeconfig (short-lived)
+        run: doctl kubernetes cluster kubeconfig save "$CLUSTER" --expiry-seconds 600
+
+      - name: Ensure namespace
+        run: kubectl get ns "$NAMESPACE" >/dev/null 2>&1 || kubectl create ns "$NAMESPACE"
+
+      - name: Apply sealed secrets
+        run: |
+          if ls infra/k8s/sealed/sealed-*.yaml >/dev/null 2>&1; then
+            kubectl apply -n "$NAMESPACE" -f infra/k8s/sealed/
+          else
+            echo "::error::No sealed-*.yaml found in infra/k8s/sealed/ — run the seal helper (gate 9) first."
+            exit 1
+          fi
+
+      - name: Helm upgrade --install
+        run: |
+          helm upgrade --install eventhub ./infra/helm/eventhub \
+            -f ./infra/helm/eventhub/values-dev.yaml \
+            --namespace "$NAMESPACE" \
+            --set image.tag="$IMAGE_TAG" \
+            --wait --timeout 8m
+
+      - name: Wait for rollouts
+        run: |
+          kubectl -n "$NAMESPACE" rollout status deploy/eventhub-api --timeout=5m
+          kubectl -n "$NAMESPACE" rollout status deploy/eventhub-frontend --timeout=5m
+
+      - name: Notify Discord (success)
+        if: success()
+        env:
+          WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          if [ -z "$WEBHOOK" ]; then echo "No DISCORD_WEBHOOK; skipping."; exit 0; fi
+          curl -fsS -H "Content-Type: application/json" \
+            -d "{\"content\": \"✅ **Deployed** \`${IMAGE_TAG:0:7}\` to ${CLUSTER}\"}" "$WEBHOOK"
+
+      - name: Notify Discord (failure)
+        if: failure()
+        env:
+          WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+        run: |
+          if [ -z "$WEBHOOK" ]; then echo "No DISCORD_WEBHOOK; skipping."; exit 0; fi
+          RUN_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+          curl -fsS -H "Content-Type: application/json" \
+            -d "{\"content\": \"❌ **Deploy failed** for \`${IMAGE_TAG:0:7}\`\nRecover: \`helm rollback eventhub -n ${NAMESPACE}\`\n${RUN_URL}\"}" "$WEBHOOK"

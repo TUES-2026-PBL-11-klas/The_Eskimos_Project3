@@ -1,0 +1,20 @@
+{{- if .Values.ingress.enabled }}
+# Let's Encrypt HTTP-01 issuer. Lives in the app chart (not Terraform) because cert-manager's
+# CRDs must already exist — they're installed by the add-ons release before CD runs this chart.
+apiVersion: cert-manager.io/v1
+kind: ClusterIssuer
+metadata:
+  name: {{ .Values.ingress.clusterIssuer }}
+  labels:
+    {{- include "eventhub.labels" . | nindent 4 }}
+spec:
+  acme:
+    email: {{ .Values.acme.email }}
+    server: {{ .Values.acme.server }}
+    privateKeySecretRef:
+      name: {{ .Values.ingress.clusterIssuer }}-account-key
+    solvers:
+      - http01:
+          ingress:
+            class: {{ .Values.ingress.className }}
+{{- end }}

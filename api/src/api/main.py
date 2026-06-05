@@ -53,6 +53,7 @@ def _configure_logging() -> None:
 
 # ── Central exception handlers — domain errors → HTTP, no internal details exposed ──────────
 
+
 async def _on_event_not_found(request: Request, exc: Exception) -> JSONResponse:
     return JSONResponse(status_code=404, content={"detail": "Event not found"})
 

@@ -108,9 +108,7 @@ async def test_events_reader_role_is_read_only(
         await conn.execute(text("CREATE ROLE events_reader_login LOGIN INHERIT PASSWORD 'reader'"))
         await conn.execute(text("GRANT events_reader TO events_reader_login"))
 
-    reader_url = make_url(test_database_url).set(
-        username="events_reader_login", password="reader"
-    )
+    reader_url = make_url(test_database_url).set(username="events_reader_login", password="reader")
     reader_engine = create_async_engine(reader_url.render_as_string(hide_password=False))
     try:
         async with reader_engine.connect() as conn:

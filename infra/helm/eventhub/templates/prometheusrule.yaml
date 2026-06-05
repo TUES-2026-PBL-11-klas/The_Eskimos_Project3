@@ -1,0 +1,50 @@
+{{- if .Values.monitoring.prometheusRules }}
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  name: {{ include "eventhub.fullname" . }}-alerts
+  labels:
+    {{- include "eventhub.labels" . | nindent 4 }}
+spec:
+  groups:
+    - name: eventhub.rules
+      rules:
+        # A pod stuck restarting (crit).
+        - alert: PodCrashLooping
+          expr: kube_pod_container_status_waiting_reason{namespace="{{ .Release.Namespace }}",reason="CrashLoopBackOff"} > 0
+          for: 5m
+          labels:
+            severity: critical
+          annotations:
+            summary: "A pod in eventhub is in CrashLoopBackOff"
+
+        # API tail latency degraded (warn). Metric from prometheus-fastapi-instrumentator.
+        - alert: ApiHighLatencyP95
+          expr: |
+            histogram_quantile(0.95,
+              sum(rate(http_request_duration_seconds_bucket{namespace="{{ .Release.Namespace }}"}[5m])) by (le)
+            ) > 2
+          for: 5m
+          labels:
+            severity: warning
+          annotations:
+            summary: "API p95 latency above 2s for 5m"
+
+        # An ingestion CronJob run failed (warn).
+        - alert: IngestionJobFailed
+          expr: kube_job_failed{namespace="{{ .Release.Namespace }}",job_name=~".*ingestion.*"} > 0
+          for: 1m
+          labels:
+            severity: warning
+          annotations:
+            summary: "An ingestion job failed"
+
+        # Elevated API 5xx — used as the DB-connectivity signal (crit). >5/min.
+        - alert: DatabaseConnectionErrors
+          expr: sum(rate(http_requests_total{namespace="{{ .Release.Namespace }}",status=~"5.."}[5m])) * 60 > 5
+          for: 2m
+          labels:
+            severity: critical
+          annotations:
+            summary: "Elevated API 5xx rate (possible database connectivity issues)"
+{{- end }}

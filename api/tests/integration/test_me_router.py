@@ -28,6 +28,7 @@ from testcontainers.postgres import PostgresContainer
 # Alembic helper (copy to keep files independent of test_auth_router.py)
 # ---------------------------------------------------------------------------
 
+
 def _run_alembic(command: str, url: str) -> None:
     from alembic import command as alembic_cmd
     from alembic.config import Config
@@ -50,6 +51,7 @@ def _run_alembic(command: str, url: str) -> None:
 # Session-scoped users container + migrated URL
 # ---------------------------------------------------------------------------
 
+
 @pytest.fixture(scope="session")
 def me_users_container() -> Iterator[PostgresContainer]:
     with PostgresContainer("postgres:16", driver="asyncpg") as c:
@@ -67,6 +69,7 @@ def me_users_db_url(me_users_container: PostgresContainer) -> str:
 # Per-test truncation (users side only — events DB is read-only)
 # ---------------------------------------------------------------------------
 
+
 @pytest_asyncio.fixture(autouse=True)
 async def _truncate(me_users_db_url: str) -> AsyncIterator[None]:
     yield
@@ -79,6 +82,7 @@ async def _truncate(me_users_db_url: str) -> AsyncIterator[None]:
 # ---------------------------------------------------------------------------
 # HTTP client — overrides both DB sessions
 # ---------------------------------------------------------------------------
+
 
 @pytest_asyncio.fixture
 async def me_client(seeded_events_db_url: str, me_users_db_url: str) -> AsyncIterator[AsyncClient]:
@@ -119,6 +123,7 @@ async def me_client(seeded_events_db_url: str, me_users_db_url: str) -> AsyncIte
 # Helpers
 # ---------------------------------------------------------------------------
 
+
 async def _register(
     client: AsyncClient, email: str = "u@test.com", pw: str = "pass123"
 ) -> dict[str, Any]:
@@ -147,6 +152,7 @@ async def _save(client: AsyncClient, token: str, event_id: int) -> dict[str, Any
 # Auth enforcement
 # ---------------------------------------------------------------------------
 
+
 @pytest.mark.integration
 async def test_save_requires_auth(me_client: AsyncClient) -> None:
     r = await me_client.post("/me/saved/1")
@@ -168,6 +174,7 @@ async def test_calendar_requires_auth(me_client: AsyncClient) -> None:
 # ---------------------------------------------------------------------------
 # POST /me/saved/{event_id}
 # ---------------------------------------------------------------------------
+
 
 @pytest.mark.integration
 async def test_save_event_creates_snapshot(me_client: AsyncClient) -> None:
@@ -208,6 +215,7 @@ async def test_save_event_duplicate_returns_409(me_client: AsyncClient) -> None:
 # GET /me/saved
 # ---------------------------------------------------------------------------
 
+
 @pytest.mark.integration
 async def test_list_saved_empty_for_new_user(me_client: AsyncClient) -> None:
     await _register(me_client)
@@ -234,6 +242,7 @@ async def test_list_saved_ordered_by_start_at(me_client: AsyncClient) -> None:
 # ---------------------------------------------------------------------------
 # DELETE /me/saved/{saved_id}
 # ---------------------------------------------------------------------------
+
 
 @pytest.mark.integration
 async def test_unsave_event_returns_204(me_client: AsyncClient) -> None:
@@ -269,12 +278,13 @@ async def test_unsave_other_users_saved_returns_404(me_client: AsyncClient) -> N
 # GET /me/calendar
 # ---------------------------------------------------------------------------
 
+
 @pytest.mark.integration
 async def test_calendar_month_filter(me_client: AsyncClient) -> None:
     await _register(me_client)
     token = await _login(me_client)
-    await _save(me_client, token, 1)   # 2026-06-10
-    await _save(me_client, token, 5)   # 2026-07-01
+    await _save(me_client, token, 1)  # 2026-06-10
+    await _save(me_client, token, 5)  # 2026-07-01
     r = await me_client.get("/me/calendar?month=2026-06", headers=_auth(token))
     assert r.status_code == 200
     days: list[dict[str, Any]] = r.json()["days"]
@@ -288,11 +298,9 @@ async def test_calendar_month_filter(me_client: AsyncClient) -> None:
 async def test_calendar_from_to_filter(me_client: AsyncClient) -> None:
     await _register(me_client)
     token = await _login(me_client)
-    await _save(me_client, token, 1)   # 2026-06-10
-    await _save(me_client, token, 5)   # 2026-07-01
-    r = await me_client.get(
-        "/me/calendar?from=2026-07-01&to=2026-07-31", headers=_auth(token)
-    )
+    await _save(me_client, token, 1)  # 2026-06-10
+    await _save(me_client, token, 5)  # 2026-07-01
+    r = await me_client.get("/me/calendar?from=2026-07-01&to=2026-07-31", headers=_auth(token))
     assert r.status_code == 200
     days = r.json()["days"]
     assert len(days) == 1
@@ -305,8 +313,8 @@ async def test_calendar_groups_same_day_events(me_client: AsyncClient) -> None:
     await _register(me_client)
     token = await _login(me_client)
     # events 1 and 6 both fall on 2026-06-10 UTC
-    await _save(me_client, token, 1)   # 19:00 UTC
-    await _save(me_client, token, 6)   # 18:00 UTC
+    await _save(me_client, token, 1)  # 19:00 UTC
+    await _save(me_client, token, 6)  # 18:00 UTC
     r = await me_client.get("/me/calendar?month=2026-06", headers=_auth(token))
     days = r.json()["days"]
     assert len(days) == 1
@@ -327,14 +335,15 @@ async def test_calendar_empty_when_no_saved_events(me_client: AsyncClient) -> No
 # POST /me/saved/{saved_id}/reminder
 # ---------------------------------------------------------------------------
 
+
 @pytest.mark.integration
 async def test_create_reminder_with_lead_hours_returns_201(me_client: AsyncClient) -> None:
     await _register(me_client)
     token = await _login(me_client)
-    saved = await _save(me_client, token, 47)   # 2026-08-01 17:00 UTC
+    saved = await _save(me_client, token, 47)  # 2026-08-01 17:00 UTC
     r = await me_client.post(
         f"/me/saved/{saved['id']}/reminder",
-        json={"lead_hours": 100},             # remind_at ≈ 2026-07-27 21:00 UTC (future)
+        json={"lead_hours": 100},  # remind_at ≈ 2026-07-27 21:00 UTC (future)
         headers=_auth(token),
     )
     assert r.status_code == 201
@@ -368,7 +377,7 @@ async def test_create_reminder_uses_default_lead_hours(me_client: AsyncClient) -
     saved = await _save(me_client, token, 47)
     r = await me_client.post(
         f"/me/saved/{saved['id']}/reminder",
-        json={},   # no lead_hours or remind_at — uses preference default
+        json={},  # no lead_hours or remind_at — uses preference default
         headers=_auth(token),
     )
     assert r.status_code == 201
@@ -378,7 +387,7 @@ async def test_create_reminder_uses_default_lead_hours(me_client: AsyncClient) -
 async def test_create_reminder_past_remind_at_returns_422(me_client: AsyncClient) -> None:
     await _register(me_client)
     token = await _login(me_client)
-    saved = await _save(me_client, token, 47)   # 2026-08-01 17:00 UTC
+    saved = await _save(me_client, token, 47)  # 2026-08-01 17:00 UTC
     # lead_hours=2000 → remind_at ≈ 2026-05-10 — well in the past
     r = await me_client.post(
         f"/me/saved/{saved['id']}/reminder",
@@ -405,6 +414,7 @@ async def test_create_reminder_for_nonexistent_saved_event_returns_404(
 # ---------------------------------------------------------------------------
 # GET /me/reminders  &  DELETE /me/reminders/{id}
 # ---------------------------------------------------------------------------
+
 
 @pytest.mark.integration
 async def test_list_reminders_returns_all_for_user(me_client: AsyncClient) -> None:
@@ -455,6 +465,7 @@ async def test_cancel_other_users_reminder_returns_404(me_client: AsyncClient) -
 # GET /me/reminders/due
 # ---------------------------------------------------------------------------
 
+
 @pytest.mark.integration
 async def test_due_reminders_empty_when_remind_at_in_future(me_client: AsyncClient) -> None:
     await _register(me_client)
@@ -474,7 +485,7 @@ async def test_due_reminders_returns_when_remind_at_in_past(
 ) -> None:
     await _register(me_client)
     token = await _login(me_client)
-    saved = await _save(me_client, token, 47)   # event start: 2026-08-01 (future)
+    saved = await _save(me_client, token, 47)  # event start: 2026-08-01 (future)
     cr = await me_client.post(
         f"/me/saved/{saved['id']}/reminder", json={"lead_hours": 100}, headers=_auth(token)
     )
@@ -504,6 +515,7 @@ async def test_reminders_requires_auth(me_client: AsyncClient) -> None:
 # ---------------------------------------------------------------------------
 # GET /me  &  PATCH /me  (profile + preferences)
 # ---------------------------------------------------------------------------
+
 
 @pytest.mark.integration
 async def test_get_me_requires_auth(me_client: AsyncClient) -> None:

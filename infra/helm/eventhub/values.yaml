@@ -1,0 +1,80 @@
+# Default values. Install the release as `eventhub` so resource names resolve to eventhub-api,
+# eventhub-frontend, eventhub-postgres (the CD rollout checks and sealed DB URLs depend on this).
+
+nameOverride: ""
+fullnameOverride: ""
+
+image:
+  registry: ghcr.io
+  owner: tues-2026-pbl-11-klas # GHCR owner, lowercased
+  tag: latest # CD overrides with the git SHA
+  pullPolicy: IfNotPresent
+
+# Private GHCR — every pod references this sealed pull secret (decision D1).
+imagePullSecrets:
+  - name: ghcr-pull
+
+# Sealed secret names (created by infra/k8s/seal.* and applied before this chart).
+secrets:
+  db: eventhub-db
+  alerts: eventhub-alerts
+
+# Rolling update with maxUnavailable=0 → zero-downtime even at replicas=1 (fits the 2 GB node).
+api:
+  replicas: 1
+  port: 8000
+  corsOrigins: "" 
+  logLevel: INFO
+  resources:
+    requests: { cpu: 50m, memory: 128Mi }
+    limits: { memory: 256Mi }
+
+frontend:
+  replicas: 1
+  port: 3000
+  useMock: false
+  resources:
+    requests: { cpu: 50m, memory: 96Mi }
+    limits: { memory: 192Mi }
+
+ingestion:
+  schedule: "0 * * * *" # hourly
+  pushgatewayUrl: http://prometheus-pushgateway.monitoring.svc.cluster.local:9091
+  # Extra env (e.g. enabled sources, API keys) as name/value pairs.
+  extraEnv: []
+  resources:
+    requests: { cpu: 50m, memory: 128Mi }
+    limits: { memory: 256Mi }
+
+cleanup:
+  schedule: "0 3 * * *" # daily at 03:00 UTC
+  resources:
+    requests: { cpu: 20m, memory: 64Mi }
+    limits: { memory: 128Mi }
+
+postgres:
+  image: postgres:16
+  user: eventhub
+  eventsDb: eventhub
+  usersDb: eventhub_users
+  storage: 5Gi
+  storageClass: do-block-storage
+  resources:
+    requests: { cpu: 100m, memory: 256Mi }
+    limits: { memory: 512Mi }
+
+ingress:
+  enabled: true
+  className: nginx
+  domain: eventhub.example.com
+  clusterIssuer: letsencrypt-prod
+  tlsSecretName: eventhub-tls
+
+acme:
+  email: you@example.com
+  server: https://acme-v02.api.letsencrypt.org/directory
+
+monitoring:
+  serviceMonitor: true
+  prometheusRules: true
+  alertmanagerConfig: true

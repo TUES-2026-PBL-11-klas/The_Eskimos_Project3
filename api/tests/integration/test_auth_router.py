@@ -28,6 +28,7 @@ from testcontainers.postgres import PostgresContainer
 # Helpers shared with test_users_db (copy to keep files independent)
 # ---------------------------------------------------------------------------
 
+
 def _run_alembic(command: str, url: str) -> None:
     from alembic import command as alembic_cmd
     from alembic.config import Config
@@ -50,6 +51,7 @@ def _run_alembic(command: str, url: str) -> None:
 # Session-scoped containers + migrated URL
 # ---------------------------------------------------------------------------
 
+
 @pytest.fixture(scope="session")
 def auth_users_container() -> Iterator[PostgresContainer]:
     with PostgresContainer("postgres:16", driver="asyncpg") as c:
@@ -67,6 +69,7 @@ def auth_users_db_url(auth_users_container: PostgresContainer) -> str:
 # Per-test truncation (keep tests isolated)
 # ---------------------------------------------------------------------------
 
+
 @pytest_asyncio.fixture(autouse=True)
 async def _truncate(auth_users_db_url: str) -> AsyncIterator[None]:
     yield
@@ -79,6 +82,7 @@ async def _truncate(auth_users_db_url: str) -> AsyncIterator[None]:
 # ---------------------------------------------------------------------------
 # HTTP client with users-DB override
 # ---------------------------------------------------------------------------
+
 
 @pytest_asyncio.fixture
 async def client(auth_users_db_url: str) -> AsyncIterator[AsyncClient]:
@@ -110,6 +114,7 @@ async def client(auth_users_db_url: str) -> AsyncIterator[AsyncClient]:
 # Fixtures: register + login helpers
 # ---------------------------------------------------------------------------
 
+
 async def _register(
     client: AsyncClient, email: str = "u@test.com", pw: str = "pass123"
 ) -> dict[str, Any]:
@@ -127,6 +132,7 @@ async def _login(client: AsyncClient, email: str = "u@test.com", pw: str = "pass
 # ---------------------------------------------------------------------------
 # Register tests
 # ---------------------------------------------------------------------------
+
 
 @pytest.mark.integration
 async def test_register_returns_201_with_user_fields(client: AsyncClient) -> None:
@@ -146,15 +152,14 @@ async def test_register_duplicate_email_returns_409(client: AsyncClient) -> None
 
 @pytest.mark.integration
 async def test_register_password_over_72_bytes_returns_422(client: AsyncClient) -> None:
-    r = await client.post(
-        "/auth/register", json={"email": "a@b.com", "password": "x" * 73}
-    )
+    r = await client.post("/auth/register", json={"email": "a@b.com", "password": "x" * 73})
     assert r.status_code == 422
 
 
 # ---------------------------------------------------------------------------
 # Login tests
 # ---------------------------------------------------------------------------
+
 
 @pytest.mark.integration
 async def test_login_returns_token_and_expiry(client: AsyncClient) -> None:
@@ -183,6 +188,7 @@ async def test_login_wrong_password_returns_401(client: AsyncClient) -> None:
 # Protected-route auth enforcement
 # ---------------------------------------------------------------------------
 
+
 @pytest.mark.integration
 async def test_no_token_returns_401(client: AsyncClient) -> None:
     r = await client.get("/auth/sessions")
@@ -210,6 +216,7 @@ async def test_valid_token_accesses_sessions_list(client: AsyncClient) -> None:
 # Logout
 # ---------------------------------------------------------------------------
 
+
 @pytest.mark.integration
 async def test_logout_returns_204(client: AsyncClient) -> None:
     await _register(client)
@@ -230,6 +237,7 @@ async def test_token_rejected_after_logout(client: AsyncClient) -> None:
 # ---------------------------------------------------------------------------
 # Session revocation
 # ---------------------------------------------------------------------------
+
 
 @pytest.mark.integration
 async def test_revoke_own_session(client: AsyncClient) -> None:
@@ -265,6 +273,7 @@ async def test_revoke_other_users_session_returns_404(client: AsyncClient) -> No
 # ---------------------------------------------------------------------------
 # Expired session
 # ---------------------------------------------------------------------------
+
 
 @pytest.mark.integration
 async def test_expired_session_returns_401(client: AsyncClient, auth_users_db_url: str) -> None:

@@ -89,10 +89,14 @@ class EventRepository(AsyncRepository[Event]):
             return list(result.scalars())
 
         # One upcoming event per category via ROW_NUMBER() OVER (PARTITION BY category_id)
-        rn = func.row_number().over(
-            partition_by=Event.category_id,
-            order_by=Event.start_at,
-        ).label("rn")
+        rn = (
+            func.row_number()
+            .over(
+                partition_by=Event.category_id,
+                order_by=Event.start_at,
+            )
+            .label("rn")
+        )
         subq = select(Event.id, rn).where(future).subquery()
         result = await self._session.execute(
             select(Event)
