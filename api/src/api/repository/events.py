@@ -25,6 +25,7 @@ class EventFilters:
     date_to: datetime | None = None
     category_slug: str | None = None
     city: str | None = None
+    venue_id: int | None = None
     q: str | None = None
     page: int = 1
     size: int = 20
@@ -157,6 +158,8 @@ class EventRepository(AsyncRepository[Event]):
             stmt = stmt.join(Event.category).where(Category.slug == f.category_slug)
         if f.city is not None:
             stmt = stmt.join(Event.venue).where(Venue.city == f.city)
+        if f.venue_id is not None:
+            stmt = stmt.join(Event.venue).where(Venue.id == f.venue_id)
         if f.q is not None:
             stmt = stmt.where(Event.title.ilike(f"%{f.q}%"))
         return stmt

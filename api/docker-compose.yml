@@ -27,6 +27,9 @@ services:
     environment:
       EVENTS_DB_URL: postgresql+asyncpg://eventhub:eventhub@host.docker.internal:5432/eventhub
       USERS_DB_URL: postgresql+asyncpg://eventhub:eventhub@users-db:5432/eventhub_users
+      # Frontend talks to the API server-side (BFF), so CORS is only a safety net for
+      # any direct browser call during development.
+      CORS_ORIGINS: http://localhost:3000
     depends_on:
       users-db:
         condition: service_healthy

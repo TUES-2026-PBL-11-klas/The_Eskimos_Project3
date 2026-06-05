@@ -68,6 +68,16 @@ GRANT USAGE ON SCHEMA public TO events_reader;
 GRANT SELECT ON ALL TABLES IN SCHEMA public TO events_reader;
 ALTER DEFAULT PRIVILEGES IN SCHEMA public GRANT SELECT ON TABLES TO events_reader;
 
+-- ─── API login role — inherits SELECT-only from events_reader ────────────────
+-- In production this is a LOGIN role; here it is NOLOGIN because the enforcement test
+-- adopts it via SET ROLE from the superuser connection, avoiding host auth complexity.
+DO $$ BEGIN
+  IF NOT EXISTS (SELECT 1 FROM pg_roles WHERE rolname = 'events_api') THEN
+    CREATE ROLE events_api NOLOGIN INHERIT;
+  END IF;
+END $$;
+GRANT events_reader TO events_api;
+
 -- ─── Reference data ─────────────────────────────────────────────────────────
 INSERT INTO sources (name, type, base_url) VALUES
     ('fixture_scraper', 'scraper', 'https://example.com'),
