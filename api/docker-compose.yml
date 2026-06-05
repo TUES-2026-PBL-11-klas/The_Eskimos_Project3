@@ -1,0 +1,70 @@
+services:
+  # Owned users database. The API is the sole writer; port 5433 is exposed on the host
+  # so `alembic upgrade head` can be run from the host or from `docker compose run api`.
+  users-db:
+    image: postgres:16
+    environment:
+      POSTGRES_DB: eventhub_users
+      POSTGRES_USER: eventhub
+      POSTGRES_PASSWORD: eventhub
+    ports: ["5433:5432"]
+    volumes:
+      - users_pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U eventhub -d eventhub_users"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  # The API service. Reads the events DB read-only and owns the users DB above.
+  # The events DB is the *ingestion* service's Postgres — start that first (`ingestion/`:
+  # `.\tasks.ps1 up`), which exposes port 5432 on the host; we reach it via host.docker.internal.
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: runtime
+    environment:
+      EVENTS_DB_URL: postgresql+asyncpg://eventhub:eventhub@host.docker.internal:5432/eventhub
+      USERS_DB_URL: postgresql+asyncpg://eventhub:eventhub@users-db:5432/eventhub_users
+      # Frontend talks to the API server-side (BFF), so CORS is only a safety net for
+      # any direct browser call during development.
+      CORS_ORIGINS: http://localhost:3000
+    depends_on:
+      users-db:
+        condition: service_healthy
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    ports: ["8000:8000"]
+
+  # Dev toolbox: pytest + ruff + mypy in the fat `test` image. src/ and tests/ are
+  # bind-mounted so edits and `ruff format` reflect on the host without a rebuild.
+  # Integration tests use testcontainers — they spin up their own throwaway postgres:16
+  # via the mounted Docker socket, reached through host.docker.internal.
+  #   docker compose run --rm test                       # full suite + coverage
+  #   docker compose run --rm test pytest -m unit         # unit only (no DB, no container)
+  #   docker compose run --rm test ruff check .           # lint
+  #   docker compose run --rm test ruff format .          # format (writes back to host)
+  #   docker compose run --rm test mypy src               # type-check
+  test:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: test
+    environment:
+      TESTCONTAINERS_HOST_OVERRIDE: host.docker.internal
+      TESTCONTAINERS_RYUK_DISABLED: "true"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    profiles: ["dev"]
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./src:/app/src
+      - ./tests:/app/tests
+      - ./seed:/app/seed
+      - ./migrations:/app/migrations
+      - ./alembic.ini:/app/alembic.ini
+      - ./pyproject.toml:/app/pyproject.toml
+
+volumes:
+  users_pgdata:

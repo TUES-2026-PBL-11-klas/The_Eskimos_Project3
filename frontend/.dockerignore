@@ -1,0 +1,21 @@
+# Keep the build context small and the image clean.
+node_modules
+.next
+.git
+.gitignore
+.githooks
+Dockerfile
+docker-compose.yml
+.dockerignore
+Makefile
+tasks.ps1
+docs
+*.md
+.env
+.env.*
+!.env.example
+npm-debug.log*
+.DS_Store
+coverage
+.vscode
+.idea
