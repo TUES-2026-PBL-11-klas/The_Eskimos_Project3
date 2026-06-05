@@ -33,13 +33,17 @@ export default async function EventsPage({ searchParams }: { searchParams: Searc
   ]);
   const cities = [...new Set(venues.map((v) => v.city).filter(Boolean))].sort() as string[];
 
-  const activeCategory = filters.category;
+  // The URL carries the category slug (the API's filter key); resolve it back to
+  // the display name for the heading.
+  const activeCategoryName = filters.category
+    ? (categories.find((c) => c.slug === filters.category)?.name ?? filters.category)
+    : undefined;
 
   return (
     <main className="mx-auto max-w-6xl px-6 py-10">
       <header className="mb-6">
         <h1 className="text-3xl font-bold text-foreground">
-          {activeCategory ? `${activeCategory} events` : "All events"}
+          {activeCategoryName ? `${activeCategoryName} events` : "All events"}
         </h1>
         <p className="mt-1 text-sm text-muted">
           {result.total} {result.total === 1 ? "event" : "events"}
