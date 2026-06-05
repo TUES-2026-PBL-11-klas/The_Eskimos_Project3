@@ -8,6 +8,13 @@ import DueRemindersPopup from "@/components/DueRemindersPopup";
 import { USE_MOCK } from "@/lib/api/config";
 import { DemoProvider } from "@/lib/demo/store";
 
+// Render every route per request so the runtime data source (mock vs live API)
+// and auth backend are honoured at request time, not baked into a static
+// prerender at build — when EVENTHUB_USE_MOCK is unset and defaults to mock.
+// Cascades to all nested routes, including the client auth pages (/me, /login,
+// /signup) that fetch no server data and would otherwise be statically rendered.
+export const dynamic = "force-dynamic";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],

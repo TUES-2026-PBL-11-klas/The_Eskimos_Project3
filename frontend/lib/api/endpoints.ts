@@ -67,7 +67,15 @@ function applyFilters(list: EventSummary[], f: EventFilters): EventSummary[] {
 /** GET /events — all events, filtered + paginated. */
 export async function getEvents(filters: EventFilters = {}): Promise<Paginated<EventSummary>> {
   if (USE_MOCK) {
-    const filtered = applyFilters([...EVENTS], filters).sort((a, b) =>
+    // The URL carries the category slug (matching the live API); mock events are
+    // keyed by category name, so translate slug → name before filtering.
+    const mockFilters = filters.category
+      ? {
+          ...filters,
+          category: CATEGORIES.find((c) => c.slug === filters.category)?.name ?? filters.category,
+        }
+      : filters;
+    const filtered = applyFilters([...EVENTS], mockFilters).sort((a, b) =>
       a.start_at.localeCompare(b.start_at),
     );
     return paginate(filtered, filters.page ?? 1, filters.size ?? DEFAULT_SIZE);

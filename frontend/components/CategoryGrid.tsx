@@ -12,7 +12,7 @@ export default function CategoryGrid({ categories }: { categories: Category[] })
         return (
           <Link
             key={c.slug}
-            href={`/events?category=${encodeURIComponent(c.name)}`}
+            href={`/events?category=${encodeURIComponent(c.slug)}`}
             className="group flex flex-col gap-3 rounded-2xl border border-border bg-surface p-5 transition hover:-translate-y-0.5 hover:border-accent/60 hover:bg-surface-2"
           >
             <span
