@@ -21,3 +21,12 @@ resource "digitalocean_record" "api" {
   value  = var.lb_ip
   ttl    = 300
 }
+
+resource "digitalocean_record" "grafana" {
+  count  = var.lb_ip == "" ? 0 : 1
+  domain = digitalocean_domain.this.id
+  type   = "A"
+  name   = "grafana"
+  value  = var.lb_ip
+  ttl    = 300
+}

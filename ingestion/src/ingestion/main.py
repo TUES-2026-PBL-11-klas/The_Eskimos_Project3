@@ -29,6 +29,7 @@ from ingestion.pipeline.base import Pipeline
 from ingestion.pipeline.categorizer import Categorizer
 from ingestion.pipeline.deduplicator import Deduplicator
 from ingestion.pipeline.normalizer import Normalizer
+from ingestion.pipeline.past_event_filter import PastEventFilter
 from ingestion.pipeline.validator import Validator
 from ingestion.repository.event_repository import EventRepository
 from ingestion.scrapers.base import BaseScraper
@@ -90,7 +91,13 @@ async def run() -> None:
         async with session_scope() as session:  # one transaction for the whole batch
             repo = EventRepository(session)
             pipeline = Pipeline(
-                [Validator(), Normalizer(metrics), Deduplicator(repo, metrics), Categorizer()]
+                [
+                    Validator(),
+                    Normalizer(metrics),
+                    PastEventFilter(),
+                    Deduplicator(repo, metrics),
+                    Categorizer(),
+                ]
             )
             consumer = asyncio.create_task(consume(pipeline))
             await asyncio.gather(*(produce(s) for s in scrapers))  # parallel producers
