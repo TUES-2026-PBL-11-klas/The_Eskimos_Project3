@@ -21,6 +21,23 @@ spec:
     spec:
       imagePullSecrets:
         {{- toYaml .Values.imagePullSecrets | nindent 8 }}
+      initContainers:
+        # Apply the users-DB schema migrations before the API starts. The image ships
+        # alembic + migrations/ + alembic.ini (api/Dockerfile); env.py reads USERS_DB_URL.
+        # Idempotent — a no-op once the DB is already at head — and gates readiness, so a
+        # failed migration surfaces as the pod stuck in Init rather than 500s at runtime.
+        - name: users-migrate
+          image: {{ include "eventhub.image" (dict "ctx" . "svc" "api") }}
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          command: ["alembic", "upgrade", "head"]
+          env:
+            - name: USERS_DB_URL
+              valueFrom:
+                secretKeyRef:
+                  name: {{ .Values.secrets.db }}
+                  key: USERS_DB_URL
+          resources:
+            {{- toYaml .Values.api.resources | nindent 12 }}
       containers:
         - name: api
           image: {{ include "eventhub.image" (dict "ctx" . "svc" "api") }}

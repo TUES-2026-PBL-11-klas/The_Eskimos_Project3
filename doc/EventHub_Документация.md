@@ -125,11 +125,12 @@ EventHub комбинира множество източници в един и
 | Frontend | Next.js (React, TypeScript) | SSR/SSG за SEO – важно за публична платформа, която трябва да се намира в Google. Удобен файлов routing. TypeScript дава compile-time проверки. |
 | Стилизация | Tailwind CSS | Utility-first подход – бърза разработка без преминаване между CSS и HTML файлове. Консистентен дизайн чрез design tokens. |
 | Backend | Python 3.11 + FastAPI | Async-by-default подходящ за паралелни HTTP заявки към скрейпвани сайтове. Автоматична OpenAPI документация. Pydantic валидация безплатно. |
-| ORM | SQLAlchemy 2.x (async) | Type safety, защита от SQL injection, версионирани миграции. Async режим се връзва добре с FastAPI. |
-| База данни | PostgreSQL 16 | Релационни данни с ясна структура. JSONB колона дава гъвкавост, без да жертваме релационните предимства (JOIN-ове, констрейнти). |
-| Скрейпване | Playwright + BeautifulSoup4 + httpx | Playwright за JS-heavy сайтове; BeautifulSoup4 за статичен HTML – две инструмента, защото различни сайтове изискват различен подход. |
+| ORM | SQLAlchemy 2.x (async) | Type safety, защита от SQL injection, версионирани миграции (Alembic). Async режим се връзва добре с FastAPI. |
+| База данни | PostgreSQL 16 | Релационни данни с ясна структура. JSONB колона (`events.raw_payload`) дава гъвкавост, без да жертваме релационните предимства (JOIN-ове, констрейнти). |
+| Скрейпване | httpx + BeautifulSoup4 + lxml | Async `httpx` за HTTP заявките (Semaphore за rate limiting, `tenacity` за retry/backoff с експоненциален backoff); BeautifulSoup4 + lxml парсват статичния HTML, а JSON API-та (Ticketmaster) се четат директно. Playwright не се ползва – нито един от текущите източници не изисква рендиране на JS. |
 | Контейнеризация | Docker + Docker Compose | Индустриален стандарт. Compose дава локална среда идентична на продукционната. |
 | Оркестрация | DigitalOcean Managed Kubernetes (DOKS) | Безплатен control plane – плащаме само worker nodes (~€12/мес.). Стандартен Kubernetes API без vendor lock-in. |
+| Контейнер registry | GitHub Container Registry (GHCR) | Образите се build-ват и съхраняват в `ghcr.io`, вграден безплатно в GitHub до проекта – без отделен платен registry. Подовете дърпат образите през sealed `ghcr-pull` secret. |
 | IaC | Terraform | Декларативна инфраструктура, преглеждана като код в PR-и. Огромна общност, добри документация и tutorials. |
 | CI/CD | GitHub Actions + Helm | CI и CD в един инструмент – няма нужда от Jenkins или ArgoCD. Helm параметризира K8s манифестите за различни среди. |
 | Pre-commit | pre-commit framework + gitleaks/detect-secrets | Блокира секрети и неформатиран код преди commit. По-евтино е да го хванеш локално, отколкото в CI. |
@@ -146,7 +147,7 @@ EventHub комбинира множество източници в един и
 
 EventHub реализира следните основни функционалности:
 
-**Агрегиране на събития.** Системата събира събития от  различни външни източници: поне 1 публичен API (Ticketmaster Discovery API или еквивалент) и поне 2 уебсайта чрез скрейпване (например programata.bg и сайта на НДК). Събирането се изпълнява периодично от scheduled job.
+**Агрегиране на събития.** Системата събира събития от различни външни източници: 1 публичен API (Ticketmaster Discovery API) и няколко сайта чрез скрейпване – НДК, Софийската опера, VisitSofia и dev.bg. Кой източник е активен в даден пробег се контролира с `enabled_sources` (CSV env var; празно = всички регистрирани). Събирането се изпълнява периодично от scheduled job (Kubernetes CronJob, на час).
 
 **Нормализация и дедупликация.** Различните източници използват различни формати, единици, часови зони и наименования. Системата нормализира всички постъпващи данни в общ модел и идентифицира дубликати (едно и също събитие, появяващо се в няколко източника) чрез fingerprint от ключови полета (заглавие + дата + локация).
 
@@ -156,16 +157,18 @@ EventHub реализира следните основни функционал
 
 **Детайлна страница на събитие.** Всяко събитие има отделна страница с пълно описание, място, цена, дата и линк към оригиналния източник за купуване на билет (когато е приложимо).
 
-**Любими събития.** Потребителят може да маркира събития като любими без задължителна регистрация – списъкът се пази в localStorage в браузъра.
+**Потребителски акаунти.** Потребителят може да се регистрира и да влиза (email + парола). Сесиите са opaque bearer токени, които живеят в httpOnly cookie; потребителят може да преглежда активните си сесии и да ги прекратява.
 
-**Календарен изглед.** Алтернативна визуализация на събитията в стил календар – месечен или седмичен изглед.
+**Запазени събития и напомняния.** Влезлият потребител може да запазва събития в профила си (пазят се сървърно в отделна `users` база, не в localStorage) и да задава напомняния преди дадено събитие. Когато настройката за демонстрация е включена (`EVENTHUB_USE_MOCK=true`), фронтендът работи изцяло офлайн срещу in-memory mock с localStorage – без нужда от API.
+
+**Календарен изглед.** Календарна визуализация на запазените събития (месечен изглед) в профила на потребителя.
 
 ### 2.2 Нефункционални изисквания
 
 - **Производителност:** API endpoint-ите трябва да отговарят бързо при типично натоварване (стотици заявки/мин).
 - **Достъпност:** Платформата е достъпна 24/7 с цел uptime ≥ 99%.
 - **Сигурност:** Без пароли в код, защита от SQL injection чрез ORM, HTTPS навсякъде, секрети управлявани централно (GitHub Secrets + Sealed Secrets).
-- **Поддръжка:** Кодът е модулен, тестван (≥ 80% покритие) и документиран. Добавянето на нов scraper не изисква промяна в pipeline-а (Open/Closed Principle).
+- **Поддръжка:** Кодът е модулен, тестван (CI налага праг на покритие ≥ 60% на сервиз) и документиран. Добавянето на нов scraper не изисква промяна в pipeline-а (Open/Closed Principle).
 - **Мащабируемост:** Архитектурата позволява хоризонтално мащабиране на API сървиса чрез добавяне на повече подове в Kubernetes.
 
 ### 2.3 Архитектура на системата
@@ -180,7 +183,7 @@ EventHub реализира следните основни функционал
 
 **Отговорност:** Събира събития от външни източници, нормализира ги, дедуплицира ги и ги записва в базата.
 
-**Тип:** Background worker, който се събужда по schedule (Kubernetes CronJob), изпълнява пълния pipeline и излиза. Няма публичен HTTP API – само `/health` и `/metrics` endpoints за Kubernetes.
+**Тип:** Background worker, който се събужда по schedule (Kubernetes CronJob), изпълнява пълния pipeline и излиза. Няма HTTP сървър изобщо – метриките от пробега се push-ват към Prometheus Pushgateway, а здравето се следи през статуса на Job-а.
 
 **Поток на работа:**
 1. Паралелно стартиране на всички registered scraper-и (с `asyncio.Semaphore` за rate limiting на изходящи заявки).
@@ -198,7 +201,7 @@ EventHub реализира следните основни функционал
 
 #### 2.3.2 API Service
 
-**Отговорност:** Public REST API, който Next.js frontend-ът консумира. **Read-only** – не пише в базата, използва PostgreSQL потребител само с `SELECT` права. Това е чисто разделение на security domain-и.
+**Отговорност:** Public REST API, който Next.js frontend-ът консумира. Сервисът работи с две отделни бази: **`events` базата е read-only** – API-то ползва PostgreSQL потребител само със `SELECT` права (Ingestion е единственият писач там); **`users` базата е read-write** и е собственост на самия API (акаунти, сесии, запазени събития, напомняния). Това чисто разделение на правата по база е и разделение на security domain-и.
 
 **Endpoints:** Виж раздел 3.2.
 
@@ -208,12 +211,17 @@ EventHub реализира следните основни функционал
 
 #### 2.3.3 Frontend (Next.js)
 
-- Главна страница със списък на предстоящи събития
-- Страници за категории (`/category/music`, `/category/sport`, ...)
-- Детайлна страница (`/event/[id]`)
-- Търсачка с филтри (дата, категория, локация, цена)
-- Календарен изглед (месечен и седмичен)
-- Server-Side Rendering за по-добро SEO
+Next.js (App Router, v16) с React Server Components и Tailwind CSS v4. Основни маршрути:
+
+- Главна страница (`/`) – hero с търсачка, категориен grid и предстоящи събития.
+- Списък/каталог на събития (`/events`) – филтрите (дата, категория, град, локация, текст) са URL search params.
+- Детайлна страница (`/events/[id]`).
+- Търсене (`/search`) и локации (`/venues`).
+- Вход и регистрация (`/login`, `/signup`).
+- Потребителски профил (`/me`, `/me/saved`, `/me/calendar`) – запазени събития, календар и напомняния.
+- Server Components fetch-ват директно от API-то (по-добро SEO).
+
+**Backend-for-Frontend (BFF):** браузърът никога не извиква API-то директно. Next route handlers под `app/api/*` препредават заявките към API-то, четат opaque сесийния токен от httpOnly cookie и го подават като `Bearer`. Така токенът не достига клиентския JavaScript.
 
 #### 2.3.4 Защо разделяме Ingestion и API
 
@@ -222,7 +230,7 @@ EventHub реализира следните основни функционал
 | Deployment lifecycle | API се деплойва често (UI промени); Ingestion се пипа рядко |
 | Scaling profile | API скейлва на потребителско натоварване; Ingestion върви на schedule |
 | Security domain | API е публично достъпен; Ingestion няма входящ трафик |
-| Read vs write | API е read-only; Ingestion е write-only – чисто разделение на правата |
+| Read vs write | Спрямо `events` базата API е read-only, а Ingestion – write-only (чисто разделение на правата); `users` базата е изцяло на API |
 
 #### 2.3.5 Защо НЕ са 3 сървиса (Scraper отделно от Processor)
 
@@ -232,51 +240,52 @@ Scrape и process винаги се случват заедно, променя�
 
 [Фигура 3. Инфраструктурна диаграма – DOKS, CI/CD, observability](infrastructure.png)
 
-*Фигура 3. Инфраструктурна диаграма – GitHub Actions деплойват през Helm в DigitalOcean Managed Kubernetes; Terraform управлява клъстера, registry, DNS; Prometheus събира метрики и Alertmanager праща алерти към Discord.*
+*Фигура 3. Инфраструктурна диаграма – GitHub Actions build-ват образите в GHCR и деплойват през Helm в DigitalOcean Managed Kubernetes; Terraform управлява клъстера, VPC, DNS и add-ons; Prometheus събира метрики и Alertmanager праща алерти към Discord.*
 
 ### 2.5 Схема на базата данни (ER диаграма)
 
-Базата данни е разделена на два домейна:
+Данните живеят в **две отделни PostgreSQL бази** върху един и същ Postgres инстанс (StatefulSet): `eventhub` (Events) и `eventhub_users` (Users). Разделението е по собственост и права – Ingestion пише само в `eventhub`, а API чете оттам и пише само в `eventhub_users`.
 
-**Домейн "Events"** – ядрото на платформата, обслужва агрегацията и публичния API.
+**База "Events"** (`eventhub`) – ядрото на платформата, обслужва агрегацията и публичния API.
 
 ![Фигура 4. ER диаграма – основни таблици за събитията](er-diagram-events.png)
 
-*Фигура 4. ER диаграма – таблиците `sources`, `events`, `venues`, `categories`, `tags` и junction таблицата `event_tags`.*
+*Фигура 4. ER диаграма – таблиците `sources`, `events`, `venues`, `categories`. (Диаграмата показва и оригиналните `tags`/`event_tags`, които са премахнати в миграция 0002 – виж бележката по-долу.)*
 
-Таблиците в този домейн:
+Таблиците в тази база:
 
-- **`sources`** – списък на източниците (Ticketmaster, programata, NDK). Полета: `id`, `name`, `type` (api/scraper), `base_url`, `last_run_at`.
-- **`events`** – основната таблица. Полета: `id`, `source_id` (FK), `external_id`, `title`, `description`, `start_at`, `end_at`, `venue_id` (FK), `category_id` (FK), `price_min`, `price_max`, `currency`, `url`, `raw_payload` (JSONB), `created_at`, `updated_at`.
-- **`venues`** – локации. Полета: `id`, `name`, `address`, `city`, `lat`, `lon`.
+- **`sources`** – списък на източниците (Ticketmaster, НДК, Sofia Opera, VisitSofia, dev.bg). Полета: `id`, `name`, `type` (api/scraper), `base_url`, `last_run_at`.
+- **`events`** – основната таблица. Полета: `id`, `source_id` (FK), `external_id`, `title`, `description`, `start_at`, `venue_id` (FK), `category_id` (FK), `url`, `dedup_key`, `raw_payload` (JSONB), `created_at`, `updated_at`.
+- **`venues`** – локации. Полета: `id`, `name`, `city`.
 - **`categories`** – категории събития. Полета: `id`, `name`, `slug`.
-- **`tags`** + **`event_tags`** – M:N връзка между събития и тагове за по-фино филтриране.
 
-**Домейн "Users"** – подготвен за бъдеща функционалност с регистрация. Към момента не се използва активно (любимите се пазят в localStorage), но миграциите са създадени и таблиците са готови за разширение.
+> Миграция `0002` подряза схемата до това, което източниците реално попълват: премахнати са `events.end_at`, `price_min/price_max/currency`, `venues.address/lat/lon`, както и неизползваните таблици `tags` и `event_tags` (M:N тагване, останало без редове). Затова ER диаграмата по-горе показва първоначалния концептуален модел, а живата схема е по-тясна.
+
+**База "Users"** (`eventhub_users`) – обслужва акаунтите и личните функции. Активно използвана е (запазените събития и напомнянията се пазят тук, не в localStorage) и е собственост на API сервиса.
 
 ![Фигура 5. ER диаграма – таблици свързани с потребители](er-diagram-users.png)
 
-*Фигура 5. ER диаграма – таблиците `users`, `user_preferences`, `favorites`, `sessions`, `reminders`.*
+*Фигура 5. ER диаграма – таблиците `users`, `user_preferences`, `saved_events`, `sessions`, `reminders`.*
 
-Таблиците в този домейн:
+Таблиците в тази база:
 
-- **`users`** – потребители (id, email, password_hash, display_name, email_verified, timestamps).
-- **`user_preferences`** – предпочитания (категории, градове, канал за нотификации).
-- **`favorites`** – запазени събития (връзка user → external event reference).
-- **`sessions`** – активни сесии (token_hash, expires_at, user_agent, ip_address).
-- **`reminders`** – планирани напомняния за събития.
+- **`users`** – потребители (`id`, `email`, `password_hash` (bcrypt), `display_name`, timestamps).
+- **`user_preferences`** – предпочитания 1:1 към `users` (`default_lead_hours`, `timezone`).
+- **`sessions`** – активни сесии (`token_hash` – SHA-256 на opaque токена, `expires_at`, `user_agent`).
+- **`saved_events`** – запазени събития като snapshot от `events` (`source`, `external_id`, `event_id`, `title`, `start_at`, `venue_name`, `city`, `category`, `url`); без FK към `events` базата.
+- **`reminders`** – напомняния за запазено събитие (`saved_event_id`, `user_id`, `remind_at`, `status`).
 
-**Нормализация: 3NF** с обосновани изключения за денормализация:
-- `price_min`/`price_max` в `events` (вместо отделна таблица за ценови диапазони) – филтрирането по цена е много често и JOIN всеки път би било излишен overhead.
-- `event_title`/`event_start_at` в `favorites` и `reminders` – дублират стойности от `events`, но позволяват на тези таблици да оцелеят дори ако референцираното събитие изчезне от агрегатора.
+**Нормализация: 3NF** с едно обосновано изключение за денормализация:
+- Snapshot полетата в `saved_events` (`title`, `start_at`, `venue_name`, `city`, `category`, `url`) дублират стойности от `events`, но са нарочно денормализирани: разкачват `users` базата от `events` базата, така че запазено събитие оцелява дори след ре-ингест или изтриване на оригинала – без cross-DB заявка.
 
 **Индекси:**
 - B-tree на `events.start_at` – за сортиране и филтриране по дата.
 - Composite индекс на `events(category_id, start_at)` – за заявки "следващите събития в категория X".
 - GIN индекс на `events.title` (с `pg_trgm`) – за full-text търсене с tolerance към печатни грешки.
+- B-tree на `events.dedup_key` – за cross-source проверка за дубликати при ингест.
 - UNIQUE индекс на `events(source_id, external_id)` – за дедупликация при upsert.
 
-**Миграции:** Alembic – up/down скриптове, версионирани в git, валидирани в CI срещу празна БД. Конвенция за именуване: `<timestamp>_<кратко_описание>.py`.
+**Миграции:** Alembic – up/down скриптове, версионирани в git, прилагани в CI/тестовете срещу празна БД. Конвенция за именуване: `<пореден_номер>_<кратко_описание>.py` (напр. `0001_initial_events_schema.py`, `0002_drop_unused_columns_and_tables.py`). Events и users схемите имат отделни Alembic вериги в съответните сервиси.
 
 **Seed скрипт** за локална разработка и integration тестове – зарежда около 50 примерни събития в различни категории.
 
@@ -290,10 +299,10 @@ Scrape и process винаги се случват заедно, променя�
 
 **Ключови класове и връзки:**
 
-- **`BaseScraper`** (abstract) – базов клас за всички scraper-и. Дефинира абстрактен метод `scrape() -> list[RawEvent]` и помощен метод `_fetch_page(url)` за общата HTTP логика.
-- **`EventimScraper`, `ProgramataScraper`, `NDKScraper`** – конкретни наследници, всеки имплементира `scrape()` според специфичния източник. Връзка: **наследяване**.
-- **`ScraperFactory`** – фабрика, която създава scraper по име. Връзка със `BaseScraper`: **създава** (--→).
-- **`PipelineStep`** (abstract) – базов клас за стъпките в pipeline-а. Метод: `process(event) -> Event`.
+- **`BaseScraper`** (abstract) – базов клас за всички scraper-и. Дефинира абстрактен метод `scrape() -> list[RawEvent]` и помощни методи `_fetch_text(url)` / `_fetch_json(url)` за общата HTTP логика (Semaphore + tenacity retry).
+- **`DevBgScraper`, `NdkScraper`, `SofiaOperaScraper`, `VisitSofiaScraper`, `TicketmasterScraper`** – конкретни наследници, всеки имплементира `scrape()` според специфичния източник. Връзка: **наследяване**.
+- **`ScraperFactory`** – фабрика, която създава scraper по име (всеки модул се регистрира с `@ScraperFactory.register("name")`). Връзка със `BaseScraper`: **създава** (--→).
+- **`PipelineStep`** (abstract) – базов клас за стъпките в pipeline-а. Метод: `process(event) -> Event | None` (връща `None`, за да отпадне събитие).
 - **`Validator`, `Normalizer`, `Categorizer`, `Deduplicator`** – конкретни наследници на `PipelineStep`. Връзка: **наследяване**.
 - **`Pipeline`** – контейнер на стъпки, метод `run(events) -> list[Event]`. Връзка с `PipelineStep`: **композиция** (има list от стъпки).
 - **`Repository[T]`** (interface, generic) – абстракция върху data access слоя.
@@ -317,7 +326,52 @@ Scrape и process винаги се случват заедно, променя�
 
 ### 3.1 Файлова структура
 
+Проектът е **monorepo** с по една директория на сервиз плюс обща инфраструктура:
 
+```
+The_Eskimos_Project3/
+├── ingestion/                # Background worker (scrape → pipeline → upsert)
+│   ├── src/ingestion/
+│   │   ├── scrapers/         # BaseScraper + ScraperFactory + devbg/ndk/sofia_opera/visitsofia/ticketmaster
+│   │   ├── pipeline/         # validator, normalizer, deduplicator, categorizer
+│   │   ├── repository/       # EventRepository (SQLAlchemy async)
+│   │   ├── domain/           # RawEvent/NormalizedEvent модели, категории
+│   │   ├── db/               # ORM, session_scope, seed
+│   │   ├── main.py           # producer/consumer оркестратор
+│   │   ├── cleanup.py        # retention worker
+│   │   ├── config.py, metrics.py, logging.py
+│   │   └── exceptions.py
+│   ├── migrations/           # Alembic (events схема)
+│   ├── tests/                # unit + integration (testcontainers) + fixtures
+│   ├── Dockerfile, docker-compose.yml, tasks.ps1 / Makefile, pyproject.toml
+│
+├── api/                      # Read-only events API + read-write users API (FastAPI)
+│   ├── src/api/
+│   │   ├── routers/          # system, events, auth, me
+│   │   ├── services/         # events, auth, me, saved, reminders
+│   │   ├── repository/       # events, users, sessions, saved, reminders
+│   │   ├── schemas/          # Pydantic request/response модели
+│   │   ├── db/               # events (read-only) + users (read-write) engines/models
+│   │   ├── domain/exceptions.py, deps.py, config.py, main.py
+│   ├── migrations/           # Alembic (users схема)
+│   ├── seed/                 # events_fixture.sql
+│   ├── tests/                # unit + integration
+│   └── Dockerfile, pyproject.toml, tasks.ps1 / Makefile
+│
+├── frontend/                 # Next.js (App Router) + Tailwind
+│   ├── app/                  # маршрути: /, /events, /search, /venues, /me/*, (auth), app/api/* (BFF)
+│   ├── components/           # EventCard, FilterBar, SearchBar, CalendarView, SaveButton, …
+│   ├── lib/                  # api клиент/BFF/мапъри, demo store, auth, categories, format
+│   └── Dockerfile, package.json, tasks.ps1 / Makefile
+│
+├── infra/
+│   ├── terraform/            # DOKS cluster, VPC, firewall, DNS, add-ons (helm_release)
+│   ├── helm/eventhub/        # Helm chart (api, frontend, postgres, cron jobs, ingress, monitoring)
+│   └── k8s/sealed/           # Sealed Secrets (db, alerts, ghcr-pull) + seal helper
+│
+├── .github/workflows/        # ci.yml, cd.yml
+└── doc/                       # тази документация и диаграмите
+```
 
 ### 3.2 Сървърна част (API endpoints)
 
@@ -325,81 +379,96 @@ Scrape и process винаги се случват заедно, променя�
 
 | Метод | Endpoint | Описание |
 | --- | --- | --- |
-| GET | `/events` | Списък със събития с pagination и филтри (date_from, date_to, category, city, price_max, q) |
+| GET | `/events` | Списък със събития с pagination и филтри (`date_from`, `date_to`, `category`, `city`, `venue_id`, `q`, `page`, `size`) |
 | GET | `/events/{id}` | Детайли за конкретно събитие |
-| GET | `/events/upcoming?limit=N` | Топ N предстоящи събития (използва SQL window function `ROW_NUMBER OVER PARTITION BY category`) |
+| GET | `/events/upcoming?limit=N&group_by=` | Топ N предстоящи събития; при `group_by=true` – по едно на категория (SQL window function `ROW_NUMBER() OVER (PARTITION BY category_id)`) |
 | GET | `/categories` | Списък категории с брой събития във всяка |
 | GET | `/venues` | Списък локации (за filter dropdown) |
-| GET | `/search?q=...` | Full-text search над заглавия и описания (PostgreSQL GIN индекс) |
-| GET | `/stats` | Обобщена статистика за главната страница (общ брой, по категории, по градове) |
-| GET | `/health` | Liveness probe за Kubernetes |
+| GET | `/search?q=...` | Full-text search над заглавия (PostgreSQL `pg_trgm` GIN индекс) |
+| GET | `/stats` | Обобщена статистика за главната страница |
+| POST | `/auth/register` | Регистрация (409 при зает email) |
+| POST | `/auth/login` | Вход – връща opaque bearer токен |
+| POST | `/auth/logout` | Прекратява текущата сесия |
+| GET | `/auth/sessions` | Активни сесии на потребителя |
+| DELETE | `/auth/sessions/{id}` | Прекратява конкретна сесия |
+| GET / PATCH | `/me` | Профил и предпочитания на влезлия потребител |
+| GET / POST / DELETE | `/me/saved`, `/me/saved/{id}` | Запазени събития (списък / запазване / премахване) |
+| GET | `/me/calendar?month=YYYY-MM` | Запазени събития по дни за календара |
+| POST | `/me/saved/{id}/reminder` | Създаване на напомняне за запазено събитие |
+| GET | `/me/reminders`, `/me/reminders/due` | Напомняния (всички / дължими сега) |
+| DELETE | `/me/reminders/{id}` | Отказване на напомняне |
+| GET | `/health` | Статус на сервиза + свързаност към двете бази (за Kubernetes probes) |
 | GET | `/metrics` | Prometheus метрики |
 
 
-Всички endpoints връщат JSON и поддържат HTTP cache headers (`Cache-Control: max-age=300, public`).
+Endpoint-ите за събития връщат JSON с HTTP cache headers (`Cache-Control: max-age=300, public`). `/auth/*` и `/me/*` изискват `Authorization: Bearer <token>` и не се кешират.
 
 **Пример за query с филтри и pagination:**
 
 ```
-GET /events?category=music&city=София&date_from=2026-06-01&price_max=50&page=1&size=20
+GET /events?category=music&city=София&date_from=2026-06-01&page=1&size=20
 ```
 
 Отговорът включва `items[]`, `total`, `page`, `size` и `pages`.
 
-**Dependency Injection чрез FastAPI:**
+**Dependency Injection чрез FastAPI:** рутерите зависят от слой от services, инжектирани с `Depends()` (типизирани като `EventServiceDep`, `AuthServiceDep`, `MeServiceDep`, …). Service-ите от своя страна получават репозиторитата, а те – DB сесия. Рутерът не знае нищо за SQL:
 
 ```python
 @router.get("/events")
 async def list_events(
-    filters: EventFilters = Depends(),
-    repo: EventRepository = Depends(get_event_repository),
-) -> EventListResponse:
-    events = await repo.find(filters)
-    return EventListResponse(items=events, ...)
+    response: Response,
+    service: EventServiceDep,
+    category: str | None = None,
+    page: int = 1,
+    size: int = 20,
+) -> EventPage:
+    filters = EventFilters(category_slug=category, page=page, size=size)
+    return await service.list_events(filters)
 ```
 
-`get_event_repository` връща конкретна имплементация на `EventRepository` (SQLAlchemy-базирана), но рутерът работи само с интерфейса. В тестове се инжектира in-memory имплементация.
+В тестовете цялата верига се сглобява срещу реална (testcontainers) или фикстурна база.
 
 ### 3.3 Клиентска част (основни компоненти)
 
-Frontend-ът използва Next.js 14 App Router с React Server Components за data fetching директно от сървъра.
+Frontend-ът използва Next.js (App Router, v16) с React Server Components за data fetching директно от сървъра.
 
 **Основни компоненти:**
 
-- **`<EventCard>`** – карта за едно събитие в списък. Получава props за изображение, заглавие, дата, място, категория. Има hover ефект и линк към детайлната страница.
-- **`<FilterSidebar>`** – лява странична лента с филтри. Управлява URL search params – промяна на филтър променя URL и тригерира refetch.
-- **`<SearchBar>`** – горна търсачка с debouncing (250 ms) преди да изпрати заявка.
-- **`<CalendarGrid>`** – клиентски компонент за календарен изглед. Изобразява месечен grid и подзарежда събития per ден on-demand.
-- **`<EventDetails>`** – детайлен изглед, включващ снимка, описание, метаданни и бутон към оригиналния източник.
-- **`<CategoryGrid>`** – grid от 7 карти за главната страница, всяка с икона и бр. събития в категорията.
-- **`<FavoriteButton>`** – малък клиентски компонент, който пази състоянието в localStorage. Star icon, който toggles между filled и outlined.
+- **`<EventCard>` / `<EventList>`** – карта и списък за събития; картата има hover ефект и линк към детайлната страница.
+- **`<FilterBar>`** – лента с филтри (дата, категория, град, локация). Управлява URL search params – промяна на филтър променя URL и тригерира refetch.
+- **`<SearchBar>`** – търсачка за пълнотекстово търсене.
+- **`<CalendarView>`** – клиентски календарен изглед на запазените събития (месечен grid).
+- **`<EventDetails>` / `<EventActions>`** – детайлен изглед с метаданни и линк към източника, плюс действията save/remind.
+- **`<CategoryGrid>`** – grid от категорийни карти за главната страница, всяка с икона и брой събития.
+- **`<SaveButton>` / `<RemindButton>`** – запазване на събитие и задаване на напомняне за влезлия потребител (през BFF).
+- **`<ReminderList>` / `<DueRemindersPopup>`** – списък с напомняния и popup за дължимите сега.
+- **`<Header>` / `<Footer>` / `<Pagination>` / `<AuthForm>` / `<VenueList>`** – навигация, странициране, форми за вход/регистрация, списък локации.
 
-**Управление на състояние:** Минимално, преобладаващо чрез URL search params (`useSearchParams()`). Localstate само в Favorites. Не използваме Redux/Zustand – проектът не го изисква.
+**Управление на състояние:** Минимално – преобладаващо чрез URL search params за филтри/търсене. Автентикираното състояние (потребител, запазени, напомняния, сесии) се държи в един React context (`DemoProvider`), който има два взаимозаменяеми backend-а: in-memory mock (localStorage) за офлайн демо и live API през BFF-а. Не използваме Redux/Zustand.
 
-**Data fetching:** Server Components fetcha-т от API директно при render. Клиентски компоненти ползват `fetch()` с `next/cache` за инкрементална регенерация.
+**Data fetching:** Server Components fetch-ват публичните данни от API-то директно при render. Личните данни (`/me/*`) минават през Next route handlers (BFF), които прикачат сесийния токен от httpOnly cookie.
 
 
 ### 3.4 Тестване и покритие
 
-**Цел: ≥ 80% test coverage** .
+**Праг на покритие:** CI налага `--cov-fail-under=60` за всеки Python сервиз (`api` и `ingestion`) – build пада под 60%.
 
 **Стек:** pytest, pytest-asyncio, pytest-cov, testcontainers за PostgreSQL.
 
 **Видове тестове:**
 
-*Unit тестове* – чиста бизнес логика без външни зависимости. Примери:
+*Unit тестове* (маркер `unit`) – чиста бизнес логика без външни зависимости, изцяло офлайн. Примери:
 - `test_normalizer_strips_html_from_description()`
 - `test_deduplicator_identifies_same_event_different_source()`
 - `test_categorizer_falls_back_to_uncategorized()`
 - `test_scraper_factory_raises_for_unknown_source()`
+- Scraper тестовете парсват запазен HTML/JSON от `tests/fixtures/` – без мрежа.
 
-*Integration тестове* (минимум 2 на сервиз) – тестват реален стек с реална БД през testcontainers. Примери:
+*Integration тестове* (маркер `integration`) – тестват реален стек с реална БД през testcontainers (throwaway `postgres:16`; `alembic upgrade head` веднъж, после freshly-truncated схема на тест). Примери:
 - `test_full_ingestion_pipeline_writes_to_db()` – fixture с mock scraper → пълен flow → assert на rows в DB.
-- `test_api_returns_filtered_events()` – seed на 20 събития → GET с филтри → assert на отговора.
+- `test_events_router` / `test_readonly_enforcement` – API срещу реална база, вкл. че events потребителят няма write права.
 
-*End-to-end тест* (един, smoke test) – докер-композ стартиран в CI, заявка към frontend-а проверява, че главната страница се зарежда.
-
-.
+*Frontend проверки* – CI пуска `eslint`, `tsc --noEmit` (typecheck) и `next build` (production build). Build-ът хваща типови и build грешки преди деплой; няма отделен браузърен e2e тест.
 
 **Code review процес:**
 - Всеки PR изисква поне 1 approval преди merge.
@@ -414,60 +483,64 @@ Frontend-ът използва Next.js 14 App Router с React Server Components 
 
 ![Фигура 3. Инфраструктурна диаграма – DOKS, CI/CD, observability](infrastructure.png)
 
-*Фигура 3. Инфраструктурна диаграма – GitHub Actions деплойват през Helm в DigitalOcean Managed Kubernetes; Terraform управлява клъстера, registry, DNS; Prometheus събира метрики и Alertmanager праща алерти към Discord.*
+*Фигура 3. Инфраструктурна диаграма – GitHub Actions build-ват образите в GHCR и деплойват през Helm в DigitalOcean Managed Kubernetes; Terraform управлява клъстера, VPC, DNS и add-ons; Prometheus събира метрики и Alertmanager праща алерти към Discord.*
 
 **Компоненти:**
 
-- **CI/CD (отгоре):** GitHub Actions с 4 основни стъпки – Lint и тестове, Build образи, Security scan (Trivy), Helm upgrade.
+- **CI/CD (отгоре):** GitHub Actions – secret scan, lint, тестове, frontend проверки, Dockerfile lint, build + Trivy scan + push към GHCR; CD прави Helm upgrade в DOKS.
 - **DigitalOcean Managed Kubernetes (DOKS) – централен blok:**
-  - *Ingestion CronJob* – по schedule на час, изпълнява scrape pipeline.
+  - *Ingestion CronJob* – на час, изпълнява scrape pipeline.
+  - *Cleanup CronJob* – дневно (03:00 UTC), trim-ва изминалите събития.
   - *API Service* – Deployment + Service, обслужва публичния REST API.
   - *Frontend* – Next.js Deployment.
-  - *PostgreSQL* – StatefulSet с PVC (Persistent Volume Claim).
-  - *Prometheus* – събира метрики от всички сервиси.
-  - *Alertmanager* – праща алерти към Discord webhook.
+  - *PostgreSQL* – StatefulSet с PVC; хоства двете бази `eventhub` и `eventhub_users`.
+  - *ingress-nginx* + *cert-manager* – публичен вход и TLS терминиране (Let's Encrypt).
+  - *kube-prometheus-stack* (Prometheus + Alertmanager, без Grafana) + *Pushgateway* за метриките на ингеста.
   - *Sealed Secrets controller* – декриптира secret-ите в клъстера.
-- **DO Container Registry** – съхранява Docker образите.
-- **Terraform (IaC)** – управлява клъстера, registry, DNS, firewall.
+- **GitHub Container Registry (GHCR)** – съхранява Docker образите (`ghcr.io/<owner>/eventhub-*`).
+- **Terraform (IaC)** – управлява DOKS клъстера, VPC, firewall, DNS и платформените add-ons (ingress-nginx, cert-manager, sealed-secrets, kube-prometheus-stack, pushgateway).
 
 ### 4.2 Docker конфигурация
 
-Всеки сервиз има собствен `Dockerfile`, използващ **multi-stage build** за оптимизация на размера.
+Всеки сервиз има собствен `Dockerfile`, използващ **multi-stage build** за по-малък и по-сигурен образ.
 
+- **API и Ingestion (Python):** `uv-base` стейдж инсталира зависимостите с `uv` от `uv.lock`; `prod-deps` дърпа само runtime групата в `/app/.venv`, а `dev-deps` (+pytest/ruff/mypy) захранва отделен `test` стейдж. Финалният `runtime` стейдж е `python:3.11-slim` само с prod venv-а и кода, върви като **non-root** потребител и стартира с `uvicorn` (API) или `python -m ingestion.main` (ingestion). Build инструментите не попадат в продукционния образ.
+- **Frontend (Next.js):** стейджове `deps → build → runner`. `build` прави `next build` със standalone output; `runner` (`node:22-alpine`, non-root `nextjs` потребител) копира само standalone bundle-а и static файловете – без `node_modules` инсталация в runtime.
 
-
+Dockerfile-ите се линтват с **hadolint** в CI.
 
 ### 4.3 CI/CD pipeline
 
-**CI Pipeline (`.github/workflows/ci.yml`)** – върви при push и PR към `main`:
+**CI Pipeline (`.github/workflows/ci.yml`)** – върви при push към `main` и при всеки PR:
 
-1. **Lint:** `ruff check`, `mypy`, `eslint`, `prettier`.
-2. **Unit тестове:** `pytest -m unit --cov` за всеки сервиз.
-3. **Integration тестове:** `pytest -m integration` (използват testcontainers за реален PostgreSQL).
-4. **Build Docker images:** Build за `ingestion`, `api`, `frontend`. Tag-ват се с git SHA.
-5. **Security scan:** `trivy image` сканира за CVE.
-6. **Push to DO Container Registry** (само на `main`).
-7. **Webhook notification:** При провал – Discord webhook.
+1. **Secret scan:** `gitleaks` сканира историята за изтекли секрети.
+2. **Lint (Python):** `ruff check`, `ruff format --check` и `mypy --strict` – матрично за `api` и `ingestion`.
+3. **Тестове (Python):** `pytest` (unit + integration през testcontainers) с праг `--cov-fail-under=60` – матрично за `api` и `ingestion`.
+4. **Frontend:** `eslint`, `tsc --noEmit` (typecheck) и `next build`.
+5. **Dockerfile lint:** `hadolint` за трите Dockerfile-а.
+6. **Build → scan → push:** build на `api`, `ingestion`, `frontend` (tag = git SHA), **Trivy** scan за HIGH/CRITICAL CVE, после push към **GHCR** като `:sha` и `:latest` (само на `main`).
+7. **Notification:** при провал – съобщение в Discord webhook.
 
-**CD Pipeline (`.github/workflows/cd.yml`)** – върви след успешен CI на `main`:
+**CD Pipeline (`.github/workflows/cd.yml`)** – тригерира се през `workflow_run` след успешен CI на `main` и деплойва точно същия SHA:
 
+1. Автентикация в DigitalOcean с `doctl` и изтегляне на кратко-жив kubeconfig за DOKS.
+2. Прилагане на sealed secrets (`infra/k8s/sealed/`).
+3. `helm upgrade --install eventhub ./infra/helm/eventhub -f values-dev.yaml --set image.tag=<sha> --wait`.
+4. Изчакване на rollout-ите на `api` и `frontend`.
+5. Discord нотификация при успех/провал (с подсказка `helm rollback` при неуспех).
 
-
-**Infrastructure as Code (Terraform):**
-
-
-
+**Infrastructure as Code (Terraform, `infra/terraform/`):** дефинира DO VPC, DOKS клъстер (последна налична версия), node pool, firewall и DNS (DO домейн + `@`/`api` A-записи към LoadBalancer-а). Платформените add-ons се инсталират като `helm_release`: sealed-secrets, ingress-nginx, cert-manager и kube-prometheus-stack (+ pushgateway). Registry-то е GHCR (на GitHub), затова не се управлява от Terraform.
 
 **Secrets Management:**
-- *CI secrets* (DIGITALOCEAN_TOKEN, REGISTRY credentials, DISCORD_WEBHOOK) – GitHub Secrets.
-- *Application secrets в K8s* – Sealed Secrets controller. Sealed (криптираната) версия е в git; декриптира се само в клъстера от controller-а, който държи private key-а. Никога няма plain text secret в git.
+- *CI secrets* (`DIGITALOCEAN_ACCESS_TOKEN`, `DISCORD_WEBHOOK`) – GitHub Secrets; push към GHCR ползва вградения `GITHUB_TOKEN`.
+- *Application secrets в K8s* – Sealed Secrets (DB креденшъли, alert webhook, `ghcr-pull` за дърпане на образите). Sealed (криптираната) версия е в git; декриптира се само в клъстера от controller-а, който държи private key-а. Никога няма plain text secret в git.
 
 ### 4.4 Observability и Alerting
 
 **Метрики (Prometheus):**
 
 - FastAPI инструментирано с `prometheus-fastapi-instrumentator` – дава автоматично RPS, latencies (p50/p95/p99), error rates per endpoint.
-- Custom метрики за Ingestion: `events_scraped_total{source}`, `events_normalized_total`, `events_deduplicated_total`, `pipeline_duration_seconds`.
+- Custom метрики за Ingestion: `events_scraped_total{source}`, `events_normalized_total`, `events_deduplicated_total`, `pipeline_duration_seconds`. Понеже ингестът е one-shot job, който приключва, тези метрики се **push-ват към Prometheus Pushgateway** (вместо да се scrape-ват); при липсващ gateway се пада обратно към структуриран лог ред с обобщението на пробега.
 - Метрики се преглеждат през Prometheus UI (без Grafana – минимален setup).
 
 **Логове:** Структурирани JSON логове към stdout. Преглеждат се с `kubectl logs` или `stern`. Без централизиран log store (Loki/ELK) – свръхпотребление за демонстрационен проект.
@@ -484,12 +557,39 @@ Frontend-ът използва Next.js 14 App Router с React Server Components 
 
 ### 4.5 Инструкции за стартиране
 
-**Локална среда (Docker Compose):**
+Сервисите се ползват през Docker – без локален venv/Postgres. На Windows командите се пускат с `tasks.ps1` (1:1 огледало на `Makefile`); под Linux/macOS – с `make`.
 
+**Ingestion** (от `ingestion/`):
 
+```powershell
+.\tasks.ps1 build          # build на runtime + test образите
+.\tasks.ps1 up             # стартира postgres в Compose (порт 5432)
+.\tasks.ps1 migrate        # alembic upgrade head
+.\tasks.ps1 seed           # seed на референтни данни (категории и др.)
+.\tasks.ps1 run            # един ингест пробег (scrape → pipeline → upsert)
+.\tasks.ps1 clean-events   # retention worker (trim на изминалите събития)
+.\tasks.ps1 test           # пълен suite + coverage
+.\tasks.ps1 down           # спира всичко и трие postgres volume-а
+```
+
+**API** (от `api/`): чете events базата от ingestion-овия Postgres, затова първо вдигни него (`.\tasks.ps1 up` от `ingestion/`). Аналогични таргети: `build`, `up` (вдига API), `migrate` (users схемата), `seed`, `test`, `lint`. Сервисът слуша на порт 8000.
+
+**Frontend** (от `frontend/`):
+
+```powershell
+npm install
+npm run dev                # http://localhost:3000
+```
+
+Фронтендът по подразбиране работи срещу вградения in-memory mock (офлайн демо). За свързване с живото API стартирай API-то и подай `EVENTHUB_USE_MOCK=false` (плюс `API_BASE_URL`, ако не е `http://localhost:8000`).
 
 **Тестове:**
 
+```powershell
+.\tasks.ps1 test             # api / ingestion: unit + integration + coverage
+.\tasks.ps1 test-unit        # само unit (без БД, офлайн)
+.\tasks.ps1 test-integration # integration (testcontainers Postgres)
+```
 
 ---
 
@@ -520,7 +620,12 @@ Frontend-ът използва Next.js 14 App Router с React Server Components 
 
 ## Заключение
 
-**Постигнат резултат.** EventHub представлява работещ end-to-end проект, който решава реален проблем (фрагментация на информация за събития). Системата покрива всички ключови изисквания на заданието:
+**Постигнат резултат.** EventHub представлява работещ end-to-end проект, който решава реален проблем (фрагментация на информация за събития). Системата покрива ключовите изисквания на заданието:
+
+- **Ingestion** сервис с 5 източника (Ticketmaster API + НДК, Софийска опера, VisitSofia, dev.bg), pipeline Validator → Normalizer → Deduplicator → Categorizer и идемпотентен upsert.
+- **API** сервис (FastAPI) – read-only публичен events API плюс акаунти, сесии, запазени събития и напомняния.
+- **Frontend** (Next.js) с филтри, търсене, детайлни страници, профил и календар.
+- **Инфраструктура** в DigitalOcean Kubernetes през Terraform + Helm, CI/CD с GitHub Actions, Prometheus/Alertmanager и Sealed Secrets.
 
 **Какво научихме.** Проектът ни даде практически опит с пълен жизнен цикъл на софтуерен продукт – от изискване до production. Овладяхме инструменти, които до момента бяхме само чели за тях: Terraform. Научихме се да преценяваме trade-off-и (микросервиси vs монолит, релационна vs документна БД, managed vs self-hosted) и да аргументираме решенията си.
 
