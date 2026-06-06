@@ -12,6 +12,7 @@ from ingestion.exceptions import InvalidEventDataError
 from ingestion.pipeline.categorizer import Categorizer
 from ingestion.pipeline.deduplicator import Deduplicator
 from ingestion.pipeline.normalizer import Normalizer
+from ingestion.pipeline.past_event_filter import PastEventFilter
 from ingestion.pipeline.validator import Validator
 
 pytestmark = pytest.mark.unit
@@ -61,6 +62,26 @@ async def test_categorizer_detects_music_keyword() -> None:
     out = await Categorizer().process(ne)
     assert isinstance(out, NormalizedEvent)
     assert out.category == Category.MUSIC
+
+
+async def test_past_event_filter_drops_old_event() -> None:
+    ne = await Normalizer().process(_raw(start_raw="2020-01-01 20:00"))
+    assert isinstance(ne, NormalizedEvent)
+    result = await PastEventFilter().process(ne)
+    assert result is None
+
+
+async def test_past_event_filter_keeps_future_event() -> None:
+    ne = await Normalizer().process(_raw(start_raw="2030-06-01 20:00"))
+    assert isinstance(ne, NormalizedEvent)
+    result = await PastEventFilter().process(ne)
+    assert result is ne
+
+
+async def test_past_event_filter_passes_raw_event_through() -> None:
+    raw = _raw()
+    result = await PastEventFilter().process(raw)
+    assert result is raw
 
 
 class _FakeRepo:
